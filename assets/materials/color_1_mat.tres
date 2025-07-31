@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bdjgu8517sxrd"]
+
+[ext_resource type="Shader" uid="uid://bwadiv8yedd7p" path="res://assets/materials/color_shader.tres" id="1_rfdog"]
+
+[resource]
+shader = ExtResource("1_rfdog")
+shader_parameter/ColorParameter = Color(0.57549495, 0.5471319, 0.7243268, 1)
