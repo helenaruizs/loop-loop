@@ -14,18 +14,23 @@ font_weight = 600
 font = SubResource("SystemFont_tbgi4")
 font_size = 72
 
-[node name="Main" type="Node" node_paths=PackedStringArray("characters", "map")]
+[node name="Main" type="Node" node_paths=PackedStringArray("characters", "ui", "map")]
 script = ExtResource("1_sugp2")
 characters = [NodePath("Character1"), NodePath("Character2")]
+ui = NodePath("UI")
 map = NodePath("Map")
 
 [node name="Map" parent="." instance=ExtResource("1_o5qli")]
 
 [node name="Character1" parent="." instance=ExtResource("2_0wfyh")]
 position = Vector2(295, 369)
+speed = 400.0
+jump_power = -500.0
 
 [node name="Character2" parent="." instance=ExtResource("2_0wfyh")]
 position = Vector2(295, 369)
+speed = 400.0
+jump_power = -500.0
 
 [node name="Timer" type="Timer" parent="."]
 
@@ -57,5 +62,12 @@ grow_horizontal = 0
 text = "0"
 label_settings = SubResource("LabelSettings_tefeu")
 horizontal_alignment = 2
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+energy = 0.76
+max_distance = 3450.0
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

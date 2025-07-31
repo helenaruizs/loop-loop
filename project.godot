@@ -15,6 +15,10 @@ run/main_scene="uid://gf5n1x2j0k11"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Globals="*res://scripts/globals.tscn"
+
 [debug]
 
 gdscript/warnings/untyped_declaration=2
@@ -32,6 +36,7 @@ enabled=PackedStringArray("res://addons/_Godot-IDE_/plugin.cfg")
 
 folder_colors={
 "res://addons/_Godot-IDE_/plugins": "blue",
+"res://addons/_Godot-IDE_/plugins/": "blue",
 "res://addons/_Godot-IDE_/shared_resources/": "teal"
 }
 

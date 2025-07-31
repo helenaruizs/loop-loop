@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://b8ml3toppckaw"]
+[gd_scene load_steps=7 format=3 uid="uid://b8ml3toppckaw"]
 
 [ext_resource type="Texture2D" uid="uid://hwemwogt4u0n" path="res://assets/characters/character_01.png" id="1_54qew"]
 [ext_resource type="Script" uid="uid://kps3tqps72sn" path="res://characters/character.gd" id="1_qqr4u"]
@@ -6,6 +6,30 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qqr4u"]
 radius = 37.0
 height = 124.0
+
+[sub_resource type="Shader" id="Shader_qqr4u"]
+code = "shader_type canvas_item;
+uniform vec4 blink_color: source_color;
+uniform float blink_intensity = 0;
+
+void fragment() {
+	vec4 color = texture(TEXTURE, UV);
+	color = mix(color, blink_color, blink_intensity * color.a);
+
+	COLOR = color;
+}
+
+//void light() {
+//	// Called for every pixel for every light affecting the CanvasItem.
+//	// Uncomment to replace the default light processing function with this one.
+//}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qqr4u"]
+resource_local_to_scene = true
+shader = SubResource("Shader_qqr4u")
+shader_parameter/blink_color = Color(1, 1, 1, 1)
+shader_parameter/blink_intensity = 1.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_3fwhk"]
 animations = [{
@@ -21,12 +45,15 @@ animations = [{
 [node name="Character" type="CharacterBody2D"]
 collision_mask = 3
 script = ExtResource("1_qqr4u")
+speed = null
+jump_power = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -63)
 shape = SubResource("CapsuleShape2D_qqr4u")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_qqr4u")
 position = Vector2(0, -68)
 sprite_frames = SubResource("SpriteFrames_3fwhk")
 animation = &"idle"
