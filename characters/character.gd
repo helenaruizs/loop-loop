@@ -2,6 +2,12 @@ class_name Character
 
 extends CharacterBody2D
 
+# Tweak these values for your look:
+const NORMAL_SCALE: Vector2 = Vector2(1, 1)
+const JUMP_STRETCH: Vector2 = Vector2(0.95, 1.1)  # Tall and thin
+const LAND_SQUASH: Vector2 = Vector2(1.24, 0.78)   # Short and wide
+const TWEEN_TIME: float = 0.08
+
 @onready var ray_down: RayCast2D = $RayDown
 @onready var ray_up: RayCast2D = $RayUp
 @onready var ray_right: RayCast2D = $RayRight
@@ -19,6 +25,7 @@ extends CharacterBody2D
 @export var jump_buffer_duration: float = 0.14   
 @export var jump_power := -1100.0
 
+var hl_color: Color
 var character_color: Color
 # cache the rays and their last‐hit markers
 var last_hits: Dictionary[RayCast2D, Area2D]= {}
@@ -29,6 +36,8 @@ var last_markers: Array[Node2D] = []
 var coyote_timer: float = 0.0
 var jump_buffer: float = 0.0
 var is_current := false
+
+var is_jumping := false
 
 var marker_active_rays: Dictionary = {} # marker : count of rays touching
 
@@ -65,24 +74,18 @@ func _physics_process(delta: float) -> void:
 			var parent: = current_marker.get_parent()
 			marker_active_rays[current_marker] = marker_active_rays.get(current_marker, 0) + 1
 			if marker_active_rays[current_marker] == 1:
-				parent.on_marker_enter(character_color)
+				parent.on_marker_enter(self)
 			last_hits[ray] = current_marker
-		#var prev := last_hits[ray]
-		#var curr: Area2D = null
-		#if ray.is_colliding():
-			#curr = ray.get_collider() as Area2D
-#
-		## Exited?
-		#if prev and prev != curr and prev.get_parent().has_method("on_marker_exit"):
-			#prev.get_parent().on_marker_exit()
-#
-		## Entered?
-		#if curr and curr != prev and curr.get_parent().has_method("on_marker_enter"):
-			#curr.get_parent().on_marker_enter()
-#
-		## Store for next frame
-		#last_hits[ray] = curr
 
+	
+
+func _tween_scale(target: Vector2) -> void:
+	sprite.scale = sprite.scale.lerp(target, 0.65)  # Immediate, or use Tween for smoother
+
+	# Or for smoothness (Tween v4+ style)
+	# var tw = create_tween()
+	# tw.tween_property(visual, "scale", target, TWEEN_TIME).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	
 func char_physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
@@ -113,6 +116,16 @@ func char_physics_process(delta: float) -> void:
 	if velocity.y < 0.0 and Input.is_action_just_released("jump"):
 		velocity.y *= 0.45  # adjust multiplier for more/less cut
 
+		# Detect jump start (leaving the floor)
+	if not is_on_floor() and !is_jumping:
+		is_jumping = true
+		_tween_scale(JUMP_STRETCH)
+# Detect landing (touching the floor after falling)
+	elif is_on_floor() and is_jumping:
+		is_jumping = false
+		_tween_scale(LAND_SQUASH)
+		await get_tree().create_timer(TWEEN_TIME).timeout
+		_tween_scale(NORMAL_SCALE)
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	# — HORIZONTAL INPUT & SMOOTH MOVE —
@@ -133,5 +146,6 @@ func tween_shader(intensity_start: float, intensity_end: float) -> void:
 func set_shader_intensity(intensity: float) -> void:
 	sprite.material.set_shader_parameter("blink_intensity", intensity)
 
-func set_shader_albedo(color: Color) -> void:
-	sprite.material.set_shader_parameter("albedo_color", color)
+func set_shader_colors(albedo: Color, hl: Color) -> void:
+	sprite.material.set_shader_parameter("albedo_color", albedo)
+	sprite.material.set_shader_parameter("blink_color", hl)

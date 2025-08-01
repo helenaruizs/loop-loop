@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b58a0d4wqwnwj"]
+[gd_scene load_steps=13 format=3 uid="uid://b58a0d4wqwnwj"]
 
 [ext_resource type="Texture2D" uid="uid://b085p0qgr8glm" path="res://assets/tiles/anim/tile_on_01.png" id="1_gftoa"]
 [ext_resource type="Script" uid="uid://j24gs73oo077" path="res://maps/tilemarker.gd" id="1_psau8"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bw0pu6ddedvyg" path="res://assets/tiles/anim/tile_on_02.png" id="3_qovx2"]
 [ext_resource type="Texture2D" uid="uid://cgjackerxcayh" path="res://assets/tiles/anim/tile_on_03.png" id="4_f1pfl"]
 [ext_resource type="Texture2D" uid="uid://dqcf06o5otvh3" path="res://assets/tiles/tile_overlay.png" id="6_ovnrr"]
+[ext_resource type="Material" uid="uid://bvh3ihx70dtn6" path="res://assets/materials/color_effect.tres" id="6_y2ck0"]
 
 [sub_resource type="Animation" id="Animation_f1pfl"]
 length = 0.001
@@ -181,7 +182,7 @@ position = Vector2(64, -64)
 shape = SubResource("RectangleShape2D_psau8")
 
 [node name="Overlay" type="Sprite2D" parent="."]
-visible = false
+material = ExtResource("6_y2ck0")
 position = Vector2(64, -64)
 texture = ExtResource("6_ovnrr")
 

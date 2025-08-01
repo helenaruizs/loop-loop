@@ -1,39 +1,35 @@
 shader_type canvas_item;
 
-uniform int bar_count = 32;
-uniform float hype = 0.0; // Set from script, 0 (no bars) to 1 (max bars)
-uniform vec4 bar_color : source_color = vec4(0.8, 0.5, 1.0, 1.0);
-uniform vec4 bg_color : source_color = vec4(0.08, 0.04, 0.12, 1.0);
+// Background colors
+uniform vec4 color_a : source_color = vec4(1, 0.3, 0.7, 1);
+uniform vec4 color_b : source_color = vec4(0.3, 1, 0.8, 1);
+uniform vec4 color_c : source_color = vec4(0.2, 0.3, 1, 1);
+
+// Swirl controls
+uniform float swirl_intensity = 0.08;  // Default is subtle (try 0.02 - 0.12)
+uniform float swirl_speed = 0.2;       // Default slow, try 0.1 - 1.0
+uniform float swirl_direction = 0.0;   // In radians (0 = right, PI/2 = up)
 
 void fragment() {
-    vec2 uv = UV;
-    float center_y = 0.5;
+    vec2 center = vec2(0.5, 0.5);
+    vec2 dir_vec = vec2(cos(swirl_direction), sin(swirl_direction));
 
-    // Determine which bar this is (0 to bar_count-1)
-    float bar = floor(uv.x * float(bar_count));
-    float bar_center = (bar + 0.5) / float(bar_count);
+    // Swirl amount modulated by distance from center and time
+    float swirl = swirl_intensity;
+    float time = TIME * swirl_speed;
+    float swirl_val = swirl * sin(dot(UV - center, dir_vec) * 8.0 + time);
 
-    // Pseudo-random "energy" per bar, animated
-    float t = TIME * 0.8 + bar * 0.3;
-    float bar_energy = (sin(t * 1.7 + bar * 2.3) * 0.5 + 0.5); // 0..1
-    // Or use a hash for more randomness:
-    // float bar_energy = fract(sin(bar * 91.9 + TIME * 2.0) * 43758.5453);
+    // Polar swirl
+    float angle = atan(UV.y - center.y, UV.x - center.x) + swirl_val * length(UV - center);
+    float len = length(UV - center);
+    vec2 swirl_uv = center + len * vec2(cos(angle), sin(angle));
 
-    // Multiply by overall hype
-    float bar_height = hype * (0.18 + bar_energy * 0.82); // 0.18 min height for visual interest
+    // Animated background color
+    float t = time * 0.5;
+    float mask_a = smoothstep(0.3, 0.7, sin(t + swirl_uv.x * 4.0 + swirl_uv.y * 3.0));
+    float mask_b = smoothstep(0.3, 0.7, sin(t * 1.2 - swirl_uv.y * 5.0));
+    float mask_c = 1.0 - mask_a - mask_b;
+    vec4 base_color = color_a * mask_a + color_b * mask_b + color_c * mask_c;
 
-    // Mirrored: top and bottom from center_y
-    float dist_from_center = abs(uv.y - center_y);
-    float is_bar = step(dist_from_center, bar_height * 0.5); // half because it's mirrored
-
-    // Soft edge (fade out)
-    float edge = 0.012;
-    float fade = smoothstep(bar_height * 0.5, bar_height * 0.5 - edge, dist_from_center);
-
-    // Only draw bars at bar locations, fade between bars
-    float bar_mask = smoothstep(0.47, 0.5, 1.0 - abs(uv.x - bar_center) * float(bar_count)); // widen bars
-
-    vec4 color = mix(bg_color, bar_color, fade * bar_mask);
-
-    COLOR = color;
+    COLOR = base_color;
 }

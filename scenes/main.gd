@@ -18,6 +18,13 @@ var colors: Array[Color] = [
 	Globals.color_04,	
 ]
 
+var hl_colors: Array[Color] = [
+	Globals.hl_color_01,
+	Globals.hl_color_02,
+	Globals.hl_color_03,
+	Globals.hl_color_04,	
+]
+
 var current_char: Character
 var current_color: Color
 var current_index:= 0
@@ -32,7 +39,8 @@ func _ready() -> void:
 		push_error("Characters array is empty")
 	for char: Character in characters:
 		char.character_color = colors[characters.find(char)]
-		char.set_shader_albedo(char.character_color)
+		char.hl_color = hl_colors[characters.find(char)]
+		char.set_shader_colors(char.character_color, char.hl_color)
 	current_char = characters[0]
 	current_color = colors[0]
 	current_char.set_shader_intensity(1.0)
@@ -50,7 +58,7 @@ func _on_timer_timeout() -> void:
 	current_time += 1
 	if current_time != max_time:
 		fx_click.play()
-		ui.bg.update_bg_fx(0.4)
+		#ui.bg.update_bg_fx(0.4)
 	ui.update_timer_counter(current_time)
 	if current_time == max_time:
 		new_turn()
@@ -60,7 +68,7 @@ func new_turn() -> void:
 	
 	fx_click_2.play()
 	
-	ui.bg.update_bg_fx(0.8)
+	ui.bg.update_bg_fx(1.0)
 	
 	current_char.tween_shader(1.0, 0.0)
 	current_char.animation_player.play("blink")
