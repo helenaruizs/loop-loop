@@ -43,9 +43,11 @@ func _ready() -> void:
 		char.character_color = colors[characters.find(char)]
 		char.hl_color = hl_colors[characters.find(char)]
 		char.set_shader_colors(char.character_color, char.hl_color)
+		char.set_tempo(tempo)
 	current_char = characters[0]
 	current_color = colors[0]
 	current_char.set_shader_intensity(1.0)
+	current_char.darken(0.0)
 	change_light(current_color)
 
 func _physics_process(delta: float) -> void:
@@ -74,9 +76,14 @@ func new_turn() -> void:
 	
 	current_char.tween_shader(1.0, 0.0)
 	current_char.animation_player.play("blink")
+	
+	current_char.animation_player.play("frozen")
+	current_char.darken(0.4)
 	# Cycle through to next char in the array and make it their turn
 	current_index = (current_index + 1) % characters.size()
 	current_char = characters[current_index]
+	current_char.animation_player.play("idle_bob")
+	current_char.darken(0.0)
 	current_color = colors[current_index]	
 	
 	current_char.tween_shader(0.0, 1.0)

@@ -1,9 +1,76 @@
-[gd_scene load_steps=12 format=3 uid="uid://b8ml3toppckaw"]
+[gd_scene load_steps=21 format=3 uid="uid://b8ml3toppckaw"]
 
-[ext_resource type="Texture2D" uid="uid://hwemwogt4u0n" path="res://assets/characters/character_01.png" id="1_54qew"]
 [ext_resource type="Script" uid="uid://kps3tqps72sn" path="res://characters/character.gd" id="1_qqr4u"]
 [ext_resource type="Material" uid="uid://bvh3ihx70dtn6" path="res://assets/materials/color_effect.tres" id="2_mdkfl"]
 [ext_resource type="Texture2D" uid="uid://b8qv15rnaf08b" path="res://assets/characters/character_blink.png" id="3_3fwhk"]
+[ext_resource type="Texture2D" uid="uid://w7jccqg7u252" path="res://assets/characters/loopy_boy/loopy_boy_frozen.png" id="3_f0775"]
+[ext_resource type="Texture2D" uid="uid://bspvelrhypx4k" path="res://assets/characters/loopy_boy/loopy_boy_01.png" id="3_jfi6v"]
+[ext_resource type="Texture2D" uid="uid://d3vfx85kplfsh" path="res://assets/characters/loopy_boy/loopy_boy_02.png" id="4_f0775"]
+[ext_resource type="Texture2D" uid="uid://bx0l1ajxdxoyl" path="res://assets/characters/loopy_boy/loopy_boy_03.png" id="5_vliyq"]
+[ext_resource type="Texture2D" uid="uid://crgludaypy81i" path="res://assets/characters/loopy_boy/loopy_boy_04.png" id="6_qulg7"]
+
+[sub_resource type="Animation" id="Animation_3fwhk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpriteFX:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpriteFX:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SpriteFX:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedSprite2D:animation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AnimatedSprite2D:frame")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="Animation" id="Animation_qqr4u"]
 resource_name = "blink"
@@ -45,49 +112,154 @@ tracks/2/keys = {
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_3fwhk"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_jfi6v"]
+resource_name = "idle"
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("SpriteFX:scale")
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
+"update": 1,
+"values": [&"idle"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("SpriteFX:visible")
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.36666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 1, 0]
+}
+
+[sub_resource type="Animation" id="Animation_f0775"]
+resource_name = "frozen"
+length = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"frozen"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true]
+"values": [0]
 }
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("SpriteFX:modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
+
+[sub_resource type="Animation" id="Animation_vliyq"]
+resource_name = "idle_in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle_in"]
+}
+
+[sub_resource type="Animation" id="Animation_qulg7"]
+resource_name = "bobbing"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
+}
+
+[sub_resource type="Animation" id="Animation_4kffy"]
+resource_name = "idle_bob"
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [&"idle", &"idle", &"idle", &"idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1, 1.0666666, 1.1333334, 1.2, 1.2666667, 1.3666668, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3666668, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3666668),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 0, 1, 2, 3, 1, 0, 0, 1, 2, 3, 1, 0, 0, 1, 2, 3, 1, 0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mdkfl"]
 _data = {
 &"RESET": SubResource("Animation_3fwhk"),
-&"blink": SubResource("Animation_qqr4u")
+&"blink": SubResource("Animation_qqr4u"),
+&"bobbing": SubResource("Animation_qulg7"),
+&"frozen": SubResource("Animation_f0775"),
+&"idle": SubResource("Animation_jfi6v"),
+&"idle_bob": SubResource("Animation_4kffy"),
+&"idle_in": SubResource("Animation_vliyq")
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qqr4u"]
@@ -98,10 +270,35 @@ height = 124.0
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_54qew")
+"texture": ExtResource("3_f0775")
+}],
+"loop": true,
+"name": &"frozen",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_jfi6v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_f0775")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_vliyq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_qulg7")
 }],
 "loop": true,
 "name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_jfi6v")
+}],
+"loop": true,
+"name": &"idle_in",
 "speed": 5.0
 }]
 
@@ -121,6 +318,7 @@ script = ExtResource("1_qqr4u")
 libraries = {
 &"": SubResource("AnimationLibrary_mdkfl")
 }
+autoplay = "idle_bob"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -63)

@@ -12,7 +12,7 @@ extends Node2D
 func _ready() -> void:
 	sprite.visible = false
 	overlay.visible = false
-
+	darken(0.0)
 
 func on_marker_enter(character: Character) -> void:
 	set_shader_colors(character.character_color, character.hl_color)
@@ -37,3 +37,7 @@ func set_shader_intensity(intensity: float) -> void:
 func set_shader_colors(albedo: Color, hl: Color) -> void:
 	overlay.material.set_shader_parameter("albedo_color", albedo)
 	overlay.material.set_shader_parameter("blink_color", hl)
+
+
+func darken(value: float) -> void:
+	overlay.material.set_shader_parameter("multiply_intensity", value)

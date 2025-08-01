@@ -44,6 +44,7 @@ var marker_active_rays: Dictionary = {} # marker : count of rays touching
 func _ready() -> void:
 	sprite_fx.visible = false
 	set_shader_intensity(0.0)
+	animation_player.play("frozen")
 	# Initialize last_hits so each ray maps to a null “last collider”
 	last_hits[ray_up]    = null
 	last_hits[ray_right] = null
@@ -131,6 +132,7 @@ func char_physics_process(delta: float) -> void:
 	# — HORIZONTAL INPUT & SMOOTH MOVE —
 	var input_dir: float = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	if abs(input_dir) > 0.01:
+		sprite.flip_h = input_dir < 0.0
 		velocity.x = move_toward(velocity.x, input_dir * speed, acceleration * delta)
 	else:
 		velocity.x = move_toward(velocity.x, 0.0, deacceleration * delta)
@@ -149,3 +151,9 @@ func set_shader_intensity(intensity: float) -> void:
 func set_shader_colors(albedo: Color, hl: Color) -> void:
 	sprite.material.set_shader_parameter("albedo_color", albedo)
 	sprite.material.set_shader_parameter("blink_color", hl)
+
+func set_tempo(tempo: float) -> void:
+	animation_player.speed_scale = animation_player.speed_scale / tempo
+
+func darken(value: float) -> void:
+	sprite.material.set_shader_parameter("multiply_intensity", value)
