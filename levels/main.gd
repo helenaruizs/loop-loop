@@ -12,7 +12,7 @@ const CHARACTER = preload("uid://b8ml3toppckaw")
 @onready var camera: Camera2D = $Camera2D
 
 var characters: Array[Character]
-var characters_number: int = 2
+var characters_number: int
 var tempo: float = 0.5
 
 @onready var spawn_points := []
@@ -21,7 +21,7 @@ var tempo: float = 0.5
 @onready var map: Map = $Map
 
 
-var current_char: Character
+var current_char: Character = null
 var current_color: Color
 var current_index:= 0
 
@@ -35,6 +35,7 @@ func _ready() -> void:
 	for child in characters_root.get_children():
 		if child is Node2D:
 			spawn_points.append(child)
+	characters_number = spawn_points.size()
 	timer.start()
 	timer.wait_time = tempo
 	animation_player.speed_scale = animation_player.speed_scale / tempo
@@ -87,6 +88,7 @@ func spawn_character(idx: int) -> Character:
 	characters_root.add_child(char)
 	characters.append(char)
 	init_character(char, idx)
+	#current_char = char
 	# Set position at spawn point if exists
 	if idx < spawn_points.size():
 		char.global_position = spawn_points[idx].global_position
@@ -102,37 +104,49 @@ func init_character(char: Character, index: int) -> void:
 	char.set_tempo(tempo)
 	
 func new_turn() -> void:
-	
 	turn += 1
-	print(turn)
-	
 	play_with_random_pitch(fx_click_2)
-	
 	ui.bg.update_bg_fx(1.0)
-	
+	print("Turn:", turn)
+
+	if turn <= characters_number:
+		# Clean up previous char if any
+		if current_char:
+			current_char.tween_shader(1.0, 0.0)
+			current_char.animation_player.play("blink")
+			current_char.animation_player.play("frozen")
+			current_char.darken(0.4)
+
+		# Spawn new char for this turn
+		var char: Character = spawn_character(turn - 1)
+		current_char = char
+		current_index = turn - 1
+
+		char.animation_player.play("idle_bob")
+		char.darken(0.0)
+		current_color = Globals.colors[current_index]
+		char.tween_shader(0.0, 1.0)
+		change_light(current_color)
+		print("Current index:", current_index)
+		return  # Do not run cycling logic below!
+
+	# From here on, just cycle
 	if current_char:
 		current_char.tween_shader(1.0, 0.0)
 		current_char.animation_player.play("blink")
 		current_char.animation_player.play("frozen")
 		current_char.darken(0.4)
-	# Cycle through to next char in the array and make it their turn
-		current_index = (current_index + 1) % characters.size()
-		current_char = characters[current_index]
-		current_char.animation_player.play("idle_bob")
-		current_char.darken(0.0)
-		current_color = Globals.colors[current_index]	
-		
-		current_char.tween_shader(0.0, 1.0)
-	
-	change_light(current_color)
 
-	if turn == 1:
-		var char: Character = spawn_character(turn -1)
-		current_char = char
-		
-	if turn == 2:
-		var char: Character = spawn_character(turn -1)
-		current_char = char
+	current_index = (current_index + 1) % characters.size()
+	current_char = characters[current_index]
+	current_char.animation_player.play("idle_bob")
+	current_char.darken(0.0)
+	current_color = Globals.colors[current_index]
+	current_char.tween_shader(0.0, 1.0)
+	change_light(current_color)
+	print("Current index:", current_index)
+
+
 
 func tween_light() -> void:
 	var tween: Tween = create_tween()
