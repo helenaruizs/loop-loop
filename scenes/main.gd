@@ -10,6 +10,7 @@ extends Node
 @export var characters: Array[Character]
 @export var ui: UI
 @export var map: Map
+@export var tempo: float = 0.5
 
 var colors: Array[Color] = [
 	Globals.color_01,
@@ -35,6 +36,7 @@ var current_time := 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	timer.start()
+	timer.wait_time = tempo
 	if characters.size() == 0:
 		push_error("Characters array is empty")
 	for char: Character in characters:

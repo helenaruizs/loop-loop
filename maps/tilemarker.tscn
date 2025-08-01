@@ -160,7 +160,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_psau8"]
-size = Vector2(106, 106)
+size = Vector2(124, 124)
 
 [node name="Tilemarker" type="Node2D" groups=["tilemarkers"]]
 script = ExtResource("1_psau8")

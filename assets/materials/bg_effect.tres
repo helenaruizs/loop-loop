@@ -10,3 +10,5 @@ shader_parameter/color_c = Color(0.31, 0.31, 0.31, 1)
 shader_parameter/swirl_intensity = 2.0350000000034925
 shader_parameter/swirl_speed = 0.2
 shader_parameter/swirl_direction = 0.0
+shader_parameter/halftone_scale = 100.0
+shader_parameter/halftone_sharpness = 2.0
