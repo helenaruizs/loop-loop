@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://ctt4kwjmmr510"]
+
+[ext_resource type="Shader" uid="uid://ccangdud27sd4" path="res://assets/materials/bg.gdshader" id="1_1qexp"]
+
+[resource]
+shader = ExtResource("1_1qexp")
+shader_parameter/bar_count = 60
+shader_parameter/hype = 0.23500000000058208
+shader_parameter/bar_color = Color(0.14, 0.14, 0.14, 1)
+shader_parameter/bg_color = Color(0.08, 0.04, 0.12, 1)

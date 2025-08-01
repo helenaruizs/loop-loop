@@ -95,14 +95,22 @@ height = 124.0
 
 [sub_resource type="Shader" id="Shader_qqr4u"]
 code = "shader_type canvas_item;
-uniform vec4 blink_color: source_color;
-uniform float blink_intensity = 0;
+
+uniform vec4 blink_color : source_color;
+uniform float blink_intensity = 0.0;
+uniform vec4 albedo_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
 
 void fragment() {
-	vec4 color = texture(TEXTURE, UV);
-	color = mix(color, blink_color, blink_intensity * color.a);
+    vec4 color = texture(TEXTURE, UV);
 
-	COLOR = color;
+    // Apply albedo tint (multiplicative)
+    color.rgb *= albedo_color.rgb;
+    color.a *= albedo_color.a;
+
+    // Mix with blink color, respecting alpha and intensity
+    color = mix(color, blink_color, blink_intensity * color.a);
+
+    COLOR = color;
 }
 
 //void light() {
@@ -115,7 +123,8 @@ void fragment() {
 resource_local_to_scene = true
 shader = SubResource("Shader_qqr4u")
 shader_parameter/blink_color = Color(1, 1, 1, 1)
-shader_parameter/blink_intensity = 3.0500000000029104
+shader_parameter/blink_intensity = 0.0
+shader_parameter/albedo_color = Color(0.32544088, 0.3254409, 0.32544088, 1)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_3fwhk"]
 animations = [{
@@ -136,6 +145,7 @@ height = 86.0
 size = Vector2(20, 2248)
 
 [node name="Character" type="CharacterBody2D"]
+light_mask = 2
 collision_mask = 3
 script = ExtResource("1_qqr4u")
 
@@ -158,12 +168,34 @@ animation = &"idle"
 position = Vector2(0, -68)
 texture = ExtResource("3_3fwhk")
 
-[node name="RayCast2D" type="RayCast2D" parent="."]
+[node name="RayDown" type="RayCast2D" parent="."]
+target_position = Vector2(0, 2000)
+collision_mask = 4
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="RayUp" type="RayCast2D" parent="."]
+target_position = Vector2(0, -2000)
+collision_mask = 4
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="RayRight" type="RayCast2D" parent="."]
+position = Vector2(0, -76)
+target_position = Vector2(2000, 0)
+collision_mask = 4
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="RayLeft" type="RayCast2D" parent="."]
+position = Vector2(0, -76)
+target_position = Vector2(-2000, 0)
 collision_mask = 4
 collide_with_areas = true
 collide_with_bodies = false
 
 [node name="Feet" type="Area2D" parent="."]
+visible = false
 collision_layer = 8
 collision_mask = 4
 
@@ -171,6 +203,7 @@ collision_mask = 4
 shape = SubResource("CapsuleShape2D_3fwhk")
 
 [node name="Feet2" type="Area2D" parent="."]
+visible = false
 position = Vector2(0, -77)
 collision_layer = 8
 collision_mask = 4

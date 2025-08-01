@@ -2,6 +2,7 @@ class_name UI
 
 extends Control
 @onready var timer_counter: Label = $TimerCounter
+@onready var bg: ColorRect = $ColorRect
 
 
 # Called when the node enters the scene tree for the first time.

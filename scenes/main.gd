@@ -30,6 +30,9 @@ func _ready() -> void:
 	timer.start()
 	if characters.size() == 0:
 		push_error("Characters array is empty")
+	for char: Character in characters:
+		char.character_color = colors[characters.find(char)]
+		char.set_shader_albedo(char.character_color)
 	current_char = characters[0]
 	current_color = colors[0]
 	current_char.set_shader_intensity(1.0)
@@ -47,6 +50,7 @@ func _on_timer_timeout() -> void:
 	current_time += 1
 	if current_time != max_time:
 		fx_click.play()
+		ui.bg.update_bg_fx(0.4)
 	ui.update_timer_counter(current_time)
 	if current_time == max_time:
 		new_turn()
@@ -55,6 +59,8 @@ func _on_timer_timeout() -> void:
 func new_turn() -> void:
 	
 	fx_click_2.play()
+	
+	ui.bg.update_bg_fx(0.8)
 	
 	current_char.tween_shader(1.0, 0.0)
 	current_char.animation_player.play("blink")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://gf5n1x2j0k11"]
+[gd_scene load_steps=12 format=3 uid="uid://gf5n1x2j0k11"]
 
 [ext_resource type="PackedScene" uid="uid://cpk17q45hnvp1" path="res://maps/Map.tscn" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://hbrtjssy20ph" path="res://scenes/main.gd" id="1_sugp2"]
@@ -6,6 +6,8 @@
 [ext_resource type="AudioStream" uid="uid://dq6b1cse3big5" path="res://assets/sound/metronome_03.wav" id="4_tbgi4"]
 [ext_resource type="AudioStream" uid="uid://xj2dphmi2yoo" path="res://assets/sound/metronome_02.wav" id="5_tefeu"]
 [ext_resource type="Script" uid="uid://cxlj50ug710sm" path="res://scenes/ui.gd" id="6_tefeu"]
+[ext_resource type="Material" uid="uid://ctt4kwjmmr510" path="res://assets/materials/bg_effect.tres" id="7_tipki"]
+[ext_resource type="Script" uid="uid://bcrevpn8mvkgh" path="res://scenes/bg_effect.gd" id="8_tipki"]
 
 [sub_resource type="SystemFont" id="SystemFont_tbgi4"]
 font_weight = 600
@@ -73,6 +75,19 @@ grow_horizontal = 0
 text = "0"
 label_settings = SubResource("LabelSettings_tefeu")
 horizontal_alignment = 2
+
+[node name="ColorRect" type="ColorRect" parent="UI"]
+z_index = -100
+material = ExtResource("7_tipki")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.27387273, 0.27387273, 0.27387273, 1)
+script = ExtResource("8_tipki")
+shader_material = ExtResource("7_tipki")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0

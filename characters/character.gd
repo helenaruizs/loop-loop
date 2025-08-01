@@ -1,7 +1,11 @@
 class_name Character
 
 extends CharacterBody2D
-@onready var ray_cast_2d: RayCast2D = $RayCast2D
+
+@onready var ray_down: RayCast2D = $RayDown
+@onready var ray_up: RayCast2D = $RayUp
+@onready var ray_right: RayCast2D = $RayRight
+@onready var ray_left: RayCast2D = $RayLeft
 
 @onready var feet: Area2D = $Feet
 @onready var sprite_fx: Sprite2D = $SpriteFX
@@ -15,14 +19,69 @@ extends CharacterBody2D
 @export var jump_buffer_duration: float = 0.14   
 @export var jump_power := -1100.0
 
+var character_color: Color
+# cache the rays and their last‐hit markers
+var last_hits: Dictionary[RayCast2D, Area2D]= {}
+
+# Keep track of which markers were hit last frame
+var last_markers: Array[Node2D] = []
+
 var coyote_timer: float = 0.0
 var jump_buffer: float = 0.0
 var is_current := false
 
+var marker_active_rays: Dictionary = {} # marker : count of rays touching
+
 func _ready() -> void:
 	sprite_fx.visible = false
 	set_shader_intensity(0.0)
+	# Initialize last_hits so each ray maps to a null “last collider”
+	last_hits[ray_up]    = null
+	last_hits[ray_right] = null
+	last_hits[ray_down]  = null
+	last_hits[ray_left]  = null
 
+
+
+func _physics_process(delta: float) -> void:
+	for ray: RayCast2D in [ray_up, ray_right, ray_down, ray_left]:
+		var prev_marker: Area2D = last_hits[ray] as Area2D
+		var current_marker: Area2D = null
+
+		if ray.is_colliding():
+			current_marker = ray.get_collider() as Area2D
+
+		# EXIT logic
+		if prev_marker != null and prev_marker != current_marker:
+			var parent: = prev_marker.get_parent()
+			marker_active_rays[prev_marker] = marker_active_rays.get(prev_marker, 1) - 1
+			if marker_active_rays[prev_marker] <= 0:
+				parent.on_marker_exit()
+				marker_active_rays.erase(prev_marker)
+			last_hits[ray] = null
+
+		# ENTER logic
+		if current_marker != null and prev_marker != current_marker:
+			var parent: = current_marker.get_parent()
+			marker_active_rays[current_marker] = marker_active_rays.get(current_marker, 0) + 1
+			if marker_active_rays[current_marker] == 1:
+				parent.on_marker_enter(character_color)
+			last_hits[ray] = current_marker
+		#var prev := last_hits[ray]
+		#var curr: Area2D = null
+		#if ray.is_colliding():
+			#curr = ray.get_collider() as Area2D
+#
+		## Exited?
+		#if prev and prev != curr and prev.get_parent().has_method("on_marker_exit"):
+			#prev.get_parent().on_marker_exit()
+#
+		## Entered?
+		#if curr and curr != prev and curr.get_parent().has_method("on_marker_enter"):
+			#curr.get_parent().on_marker_enter()
+#
+		## Store for next frame
+		#last_hits[ray] = curr
 
 func char_physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -73,4 +132,6 @@ func tween_shader(intensity_start: float, intensity_end: float) -> void:
 
 func set_shader_intensity(intensity: float) -> void:
 	sprite.material.set_shader_parameter("blink_intensity", intensity)
-	
+
+func set_shader_albedo(color: Color) -> void:
+	sprite.material.set_shader_parameter("albedo_color", color)

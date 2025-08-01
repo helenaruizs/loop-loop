@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://b58a0d4wqwnwj"]
+[gd_scene load_steps=12 format=3 uid="uid://b58a0d4wqwnwj"]
 
 [ext_resource type="Texture2D" uid="uid://b085p0qgr8glm" path="res://assets/tiles/anim/tile_on_01.png" id="1_gftoa"]
 [ext_resource type="Script" uid="uid://j24gs73oo077" path="res://maps/tilemarker.gd" id="1_psau8"]
 [ext_resource type="Animation" uid="uid://tfocxhlvdhbi" path="res://assets/anims/step_on.res" id="2_81enh"]
 [ext_resource type="Texture2D" uid="uid://bw0pu6ddedvyg" path="res://assets/tiles/anim/tile_on_02.png" id="3_qovx2"]
 [ext_resource type="Texture2D" uid="uid://cgjackerxcayh" path="res://assets/tiles/anim/tile_on_03.png" id="4_f1pfl"]
+[ext_resource type="Texture2D" uid="uid://dqcf06o5otvh3" path="res://assets/tiles/tile_overlay.png" id="6_ovnrr"]
 
 [sub_resource type="Animation" id="Animation_f1pfl"]
 length = 0.001
@@ -71,6 +72,7 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id="Animation_ovnrr"]
 resource_name = "step_off"
+length = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -78,7 +80,7 @@ tracks/0/path = NodePath("Sprite2D:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.19999999, 1),
+"times": PackedFloat32Array(0, 0.049999997, 0.25),
 "transitions": PackedFloat32Array(1, 2.4622884, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0.5411765), Color(1, 1, 1, 1), Color(0.012617188, 0.012617188, 0.012617188, 0)]
@@ -90,7 +92,7 @@ tracks/1/path = NodePath("Sprite2D:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 1),
+"times": PackedFloat32Array(0, 0.05, 0.25),
 "transitions": PackedFloat32Array(1, 1, 5.8563523),
 "update": 0,
 "values": [Vector2(1.3, 1.3), Vector2(1, 1), Vector2(0.9, 0.9)]
@@ -102,7 +104,7 @@ tracks/2/path = NodePath("Sprite2D:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 0.25),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -126,7 +128,7 @@ tracks/4/path = NodePath("Sprite2D:rotation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.100000024, 1),
+"times": PackedFloat32Array(0, 0.025000006, 0.25),
 "transitions": PackedFloat32Array(2.297397, 2.297397, 0.22531268),
 "update": 0,
 "values": [0.0, -1.8007546e-05, 0.2617993877991494]
@@ -157,7 +159,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_psau8"]
-size = Vector2(128, 128)
+size = Vector2(106, 106)
 
 [node name="Tilemarker" type="Node2D" groups=["tilemarkers"]]
 script = ExtResource("1_psau8")
@@ -173,11 +175,15 @@ sprite_frames = SubResource("SpriteFrames_psau8")
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 4
-collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(64, -64)
 shape = SubResource("RectangleShape2D_psau8")
+
+[node name="Overlay" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(64, -64)
+texture = ExtResource("6_ovnrr")
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]
