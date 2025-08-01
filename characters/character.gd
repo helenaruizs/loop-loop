@@ -42,7 +42,7 @@ var is_jumping := false
 var marker_active_rays: Dictionary = {} # marker : count of rays touching
 
 func _ready() -> void:
-	sprite_fx.visible = false
+	#sprite_fx.visible = false
 	set_shader_intensity(0.0)
 	animation_player.play("frozen")
 	# Initialize last_hits so each ray maps to a null “last collider”

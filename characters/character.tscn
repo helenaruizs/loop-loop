@@ -71,6 +71,30 @@ tracks/4/keys = {
 "update": 1,
 "values": [0]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AnimatedSprite2D:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("AnimatedSprite2D:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -66)]
+}
 
 [sub_resource type="Animation" id="Animation_qqr4u"]
 resource_name = "blink"
@@ -245,10 +269,34 @@ tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 1, 1.0666666, 1.1333334, 1.2, 1.2666667, 1.3666668, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3666668, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3666668),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.2, 1, 1.0666666, 1.1333334, 1.2, 1.2666667, 1.3666668, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3666668, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3666668),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 0, 1, 2, 3, 1, 0, 0, 1, 2, 3, 1, 0, 0, 1, 2, 3, 1, 0]
+"values": [4, 0, 0, 1, 2, 3, 1, 0, 0, 1, 2, 3, 1, 0, 0, 1, 2, 3, 1, 0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.20000002),
+"transitions": PackedFloat32Array(0, 0, 0),
+"update": 0,
+"values": [Vector2(0.985, 1.085), Vector2(1.1, 0.9), Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedSprite2D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(0, 0, 0),
+"update": 0,
+"values": [Vector2(0, -73.155), Vector2(0, -65.765), Vector2(0, -66)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mdkfl"]
@@ -288,6 +336,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("6_qulg7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_f0775")
 }],
 "loop": true,
 "name": &"idle",
@@ -329,6 +380,7 @@ material = ExtResource("2_mdkfl")
 position = Vector2(0, -66)
 sprite_frames = SubResource("SpriteFrames_3fwhk")
 animation = &"idle"
+offset = Vector2(-2.9415321, 0)
 
 [node name="SpriteFX" type="Sprite2D" parent="."]
 position = Vector2(0, -68)

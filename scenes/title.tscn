@@ -1,0 +1,57 @@
+[gd_scene load_steps=6 format=3 uid="uid://bjx7oapnevy5d"]
+
+[ext_resource type="Material" uid="uid://ctt4kwjmmr510" path="res://assets/materials/bg_effect.tres" id="1_4ignj"]
+[ext_resource type="Script" uid="uid://d0886443jke8w" path="res://scenes/title.gd" id="1_p6dhs"]
+[ext_resource type="Script" uid="uid://c3jxnsjo08g0t" path="res://scripts/button.gd" id="2_wosw1"]
+
+[sub_resource type="SystemFont" id="SystemFont_wosw1"]
+
+[sub_resource type="Theme" id="Theme_p6dhs"]
+default_font = SubResource("SystemFont_wosw1")
+default_font_size = 40
+
+[node name="Title" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_p6dhs")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = ExtResource("1_4ignj")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -65.0
+offset_right = 200.0
+offset_bottom = 65.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_p6dhs")
+text = "PLAY"
+script = ExtResource("2_wosw1")
+
+[node name="Quit" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_p6dhs")
+text = "QUIT"
+
+[connection signal="pressed" from="VBoxContainer/Play" to="." method="_on_play_pressed"]

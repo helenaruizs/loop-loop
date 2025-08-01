@@ -23,6 +23,8 @@ func _process(delta: float) -> void:
 func _spawn_tile_markers() -> void:
 	tile_markers.clear()
 	for cell: Vector2i in tilemap.get_used_cells():
+		if _has_marker_at_cell(cell):
+			continue  # Skip if marker is already there
 		# 1) Instance the marker
 		var marker: TileMarker = TILEMARKER.instantiate() as TileMarker
 
@@ -34,3 +36,15 @@ func _spawn_tile_markers() -> void:
 		# 3) Parent under this Map and track it
 		add_child(marker)
 		tile_markers.append(marker)
+		
+func _has_marker_at_cell(cell: Vector2i) -> bool:
+	var local_pos: Vector2 = tilemap.map_to_local(cell)
+	var marker_center := Vector2(
+		local_pos.x - tile_size.x/2,
+		local_pos.y + tile_size.y/2
+	)
+	for child in get_children():
+		if child is TileMarker:
+			if child.position.distance_to(marker_center) < 1.0:
+				return true
+	return false
