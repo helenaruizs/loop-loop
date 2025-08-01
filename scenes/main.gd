@@ -57,6 +57,7 @@ func new_turn() -> void:
 	fx_click_2.play()
 	
 	current_char.tween_shader(1.0, 0.0)
+	current_char.animation_player.play("blink")
 	# Cycle through to next char in the array and make it their turn
 	current_index = (current_index + 1) % characters.size()
 	current_char = characters[current_index]
@@ -65,6 +66,12 @@ func new_turn() -> void:
 	current_char.tween_shader(0.0, 1.0)
 	
 	change_light(current_color)
+
+
+func tween_light() -> void:
+	var tween: Tween = create_tween()
+	var duration:= 0.3
+	tween.tween_method(change_light, Color.WHITE, current_color, duration)
 
 func change_light(_color: Color) -> void:
 	main_light.color = _color

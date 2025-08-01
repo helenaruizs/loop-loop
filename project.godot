@@ -40,6 +40,10 @@ folder_colors={
 "res://addons/_Godot-IDE_/shared_resources/": "teal"
 }
 
+[global_group]
+
+tilemarkers=""
+
 [input]
 
 move_right={
@@ -72,6 +76,8 @@ jump={
 
 2d_physics/layer_1="player"
 2d_physics/layer_2="tiles"
+2d_physics/layer_3="markers"
+2d_physics/layer_4="foot_probe"
 
 [rendering]
 
