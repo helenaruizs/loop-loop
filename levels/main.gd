@@ -56,7 +56,6 @@ func _ready() -> void:
 	change_light(current_color)
 
 func _physics_process(delta: float) -> void:
-	map.check_win_condition()
 	if current_char:
 		current_char.char_physics_process(delta)
 

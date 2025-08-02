@@ -80,8 +80,6 @@ func _on_marker_triggered(marker: TileMarker, color: Globals.ColorNames) -> void
 			objectives_color_03_hits.append(marker)
 		Globals.ColorNames.COLOR_04:
 			objectives_color_04_hits.append(marker)
-	print(objectives_color_01_hits.size())
-	print(objectives_color_01.size())
 	
 func _on_marker_triggered_out(marker: TileMarker, color: Globals.ColorNames) -> void:
 	#if objectives_color_01_hits.has(marker) or objectives_color_02_hits.has(marker):
@@ -106,6 +104,9 @@ func compare_arrays(a: Array, b: Array) -> bool:
 	return a_sorted == b_sorted
 
 func check_win_condition() -> void:
-	if objectives_color_01.size() == objectives_color_01_hits.size() and objectives_color_02.size() == objectives_color_02_hits.size():
-		print("BOOM")
-		Globals.emit_signal("level_completed")
+	for marker in get_tree().get_nodes_in_group("objectives"):
+		if not marker.is_correctly_activated():
+			return
+	# If we reach here, ALL objective markers are correct
+	print("BOOM")
+	Globals.emit_signal("level_completed")

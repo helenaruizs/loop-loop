@@ -36,38 +36,38 @@ script = ExtResource("1_gwogx")
 tile_map_data = PackedByteArray("AAAAAAAAAQAAAAAAAAAJAAUAAQAAAAAAAAAMAAcAAQAAAAAAAAANAAcAAQAAAAAAAAAOAAcAAQAAAAAAAAAOAAgAAQAAAAAAAAAOAAYAAQAAAAAAAAAOAAUAAQAAAAAAAAAOAAQAAQAAAAAAAAAOAAMAAQAAAAAAAAAOAAIAAQAAAAAAAAAOAAEAAQAAAAAAAAAOAAAAAQAAAAAAAAANAAAAAQAAAAAAAAAMAAAAAQAAAAAAAAALAAAAAQAAAAAAAAAKAAAAAQAAAAAAAAAJAAAAAQAAAAAAAAAIAAAAAQAAAAAAAAAHAAAAAQAAAAAAAAAGAAAAAQAAAAAAAAAFAAAAAQAAAAAAAAAEAAAAAQAAAAAAAAADAAAAAQAAAAAAAAACAAAAAQAAAAAAAAABAAAAAQAAAAAAAAAAAAEAAQAAAAAAAAAAAAIAAQAAAAAAAAAAAAMAAQAAAAAAAAAAAAQAAQAAAAAAAAAAAAUAAQAAAAAAAAAAAAYAAQAAAAAAAAAAAAcAAQAAAAAAAAAAAAgAAQAAAAAAAAABAAgAAQAAAAAAAAACAAgAAQAAAAAAAAADAAgAAQAAAAAAAAAEAAgAAQAAAAAAAAAFAAgAAQAAAAAAAAAGAAgAAQAAAAAAAAAHAAgAAQAAAAAAAAAIAAgAAQAAAAAAAAAJAAgAAQAAAAAAAAAKAAgAAQAAAAAAAAALAAgAAQAAAAAAAAAMAAgAAQAAAAAAAAANAAgAAQAAAAAAAAABAAcAAQAAAAAAAAACAAcAAQAAAAAAAAADAAcAAQAAAAAAAAAEAAcAAQAAAAAAAAAFAAcAAQAAAAAAAAAGAAcAAQAAAAAAAAAHAAcAAQAAAAAAAAAJAAYAAQAAAAAAAAAJAAcAAQAAAAAAAAAKAAcAAQAAAAAAAAALAAcAAQAAAAAAAAAIAAcAAQAAAAAAAAAFAAYAAQAAAAAAAAA=")
 tile_set = SubResource("TileSet_g1ume")
 
-[node name="MarkerColor1_1" parent="." instance=ExtResource("5_sh0dp")]
+[node name="MarkerColor1_1" parent="." groups=["objectives"] instance=ExtResource("5_sh0dp")]
 position = Vector2(384, 128)
 is_objective = true
 
-[node name="MarkerColor1_2" parent="." instance=ExtResource("5_sh0dp")]
+[node name="MarkerColor1_2" parent="." groups=["objectives"] instance=ExtResource("5_sh0dp")]
 position = Vector2(0, 896)
 is_objective = true
 
-[node name="MarkerColor1_3" parent="." instance=ExtResource("5_sh0dp")]
+[node name="MarkerColor1_3" parent="." groups=["objectives"] instance=ExtResource("5_sh0dp")]
 position = Vector2(640, 896)
 is_objective = true
 
-[node name="MarkerColor1_4" parent="." instance=ExtResource("5_sh0dp")]
+[node name="MarkerColor1_4" parent="." groups=["objectives"] instance=ExtResource("5_sh0dp")]
 position = Vector2(384, 1024)
 is_objective = true
 
-[node name="MarkerColor2_1" parent="." instance=ExtResource("5_sh0dp")]
+[node name="MarkerColor2_1" parent="." groups=["objectives"] instance=ExtResource("5_sh0dp")]
 position = Vector2(1792, 896)
 is_objective = true
 objective_color = 1
 
-[node name="MarkerColor2_2" parent="." instance=ExtResource("5_sh0dp")]
+[node name="MarkerColor2_2" parent="." groups=["objectives"] instance=ExtResource("5_sh0dp")]
 position = Vector2(1408, 1024)
 is_objective = true
 objective_color = 1
 
-[node name="MarkerColor2_3" parent="." instance=ExtResource("5_sh0dp")]
+[node name="MarkerColor2_3" parent="." groups=["objectives"] instance=ExtResource("5_sh0dp")]
 position = Vector2(1152, 896)
 is_objective = true
 objective_color = 1
 
-[node name="MarkerColor2_4" parent="." instance=ExtResource("5_sh0dp")]
+[node name="MarkerColor2_4" parent="." groups=["objectives"] instance=ExtResource("5_sh0dp")]
 position = Vector2(1408, 128)
 is_objective = true
 objective_color = 1

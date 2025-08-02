@@ -61,7 +61,35 @@ func _ready() -> void:
 	last_hits[ray_left]  = null
 	Globals.level_completed.connect(on_level_completed)
 
+func _physics_process(delta: float) -> void:
+	
+	
+	var rays: Array = [ray_up, ray_right, ray_down, ray_left]
+	for ray: RayCast2D in rays:
+		var prev_marker: Area2D = last_hits[ray] as Area2D
+		var current_marker: Area2D = null
+		if ray.is_colliding():
+			print("RAY", ray.name, "colliding with", ray.get_collider(), "at", ray.global_position)
+			current_marker = ray.get_collider() as Area2D
 
+		# EXIT logic (ray left a marker)
+		if prev_marker != null and prev_marker != current_marker:
+			var parent: = prev_marker.get_parent()
+			marker_active_rays[prev_marker] = marker_active_rays.get(prev_marker, 1) - 1
+			if marker_active_rays[prev_marker] <= 0:
+				# Only fire off event if *no* rays are left touching this marker!
+				parent.on_marker_exit()
+				marker_active_rays.erase(prev_marker)
+			last_hits[ray] = null
+
+		# ENTER logic (ray entered a new marker)
+		if current_marker != null and prev_marker != current_marker:
+			var parent: = current_marker.get_parent()
+			marker_active_rays[current_marker] = marker_active_rays.get(current_marker, 0) + 1
+			if marker_active_rays[current_marker] == 1:
+				# Only fire if *first* ray is touching this marker!
+				parent.on_marker_enter(self)
+			last_hits[ray] = current_marker
 #
 #func _physics_process(delta: float) -> void:
 	#var rays: Array = [ray_up, ray_right, ray_down, ray_left]
@@ -102,6 +130,9 @@ func _tween_scale(target: Vector2) -> void:
 	# tw.tween_property(visual, "scale", target, TWEEN_TIME).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	
 func char_physics_process(delta: float) -> void:
+	
+	for ray: RayCast2D in [ray_up, ray_right, ray_down, ray_left]:
+		ray.force_raycast_update()
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -161,35 +192,6 @@ func char_physics_process(delta: float) -> void:
 	sprite.skew = lerp(sprite.skew, target_skew, 0.17)
 	
 	move_and_slide()
-	
-	
-	var rays: Array = [ray_up, ray_right, ray_down, ray_left]
-	for ray: RayCast2D in rays:
-		var prev_marker: Area2D = last_hits[ray] as Area2D
-		var current_marker: Area2D = null
-		if ray.is_colliding():
-			current_marker = ray.get_collider() as Area2D
-
-		# EXIT logic (ray left a marker)
-		if prev_marker != null and prev_marker != current_marker:
-			var parent: = prev_marker.get_parent()
-			marker_active_rays[prev_marker] = marker_active_rays.get(prev_marker, 1) - 1
-			print("Ray exit", prev_marker, "count:", marker_active_rays[prev_marker])
-			if marker_active_rays[prev_marker] <= 0:
-				# Only fire off event if *no* rays are left touching this marker!
-				parent.on_marker_exit()
-				marker_active_rays.erase(prev_marker)
-			last_hits[ray] = null
-
-		# ENTER logic (ray entered a new marker)
-		if current_marker != null and prev_marker != current_marker:
-			var parent: = current_marker.get_parent()
-			marker_active_rays[current_marker] = marker_active_rays.get(current_marker, 0) + 1
-			print("Ray enter", current_marker, "count:", marker_active_rays[current_marker])
-			if marker_active_rays[current_marker] == 1:
-				# Only fire if *first* ray is touching this marker!
-				parent.on_marker_enter(self)
-			last_hits[ray] = current_marker
 	
 		# Normalized screen position
 	var viewport_size := get_viewport().get_visible_rect().size
