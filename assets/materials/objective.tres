@@ -1,47 +1,19 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bcjey8e7s1al4"]
 
-[sub_resource type="Shader" id="Shader_qqr4u"]
+[sub_resource type="Shader" id="Shader_363qx"]
 code = "shader_type canvas_item;
 render_mode unshaded;
 
-uniform vec4 blink_color : source_color;
-uniform float blink_intensity = 0.0;
 uniform vec4 albedo_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
-
-uniform vec4 multiply_color : source_color = vec4(0.0, 0.0, 0.0, 1.0); // the tint
-uniform float multiply_intensity = 0.0; // 0 = no multiply, 1 = full multiply
-
-vec3 overlay_blend(vec3 base, vec3 blend) {
-    return mix(
-        2.0 * base * blend,
-        1.0 - 2.0 * (1.0 - base) * (1.0 - blend),
-        step(0.5, base)
-    );
-}
 
 void fragment() {
     vec4 color = texture(TEXTURE, UV);
-
-    // Apply albedo tint (multiplicative)
     color.rgb *= albedo_color.rgb;
     color.a *= albedo_color.a;
-
-    // Overlay blink_color over color, modulated by blink_intensity
-    vec3 overlay = overlay_blend(color.rgb, blink_color.rgb);
-    color.rgb = mix(color.rgb, overlay, blink_intensity * blink_color.a); // respect blink_color alpha
-
-    // Multiply layer (tint/shadow/etc)
-    color.rgb = mix(color.rgb, color.rgb * multiply_color.rgb, multiply_intensity * multiply_color.a);
-
     COLOR = color;
-}
-"
+}"
 
 [resource]
 resource_local_to_scene = true
-shader = SubResource("Shader_qqr4u")
-shader_parameter/blink_color = Color(1, 1, 1, 1)
-shader_parameter/blink_intensity = 0.0
+shader = SubResource("Shader_363qx")
 shader_parameter/albedo_color = Color(0.99999994, 0.3127785, 0.7789512, 1)
-shader_parameter/multiply_color = Color(0.1816937, 0.23868673, 0.38578254, 1)
-shader_parameter/multiply_intensity = 0.0

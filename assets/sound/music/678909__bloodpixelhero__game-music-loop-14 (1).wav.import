@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dgj3kb31f4t43"
+path="res://.godot/imported/678909__bloodpixelhero__game-music-loop-14 (1).wav-e57a7650b453e7cad61b912a1b81bd8f.sample"
+
+[deps]
+
+source_file="res://assets/sound/music/678909__bloodpixelhero__game-music-loop-14 (1).wav"
+dest_files=["res://.godot/imported/678909__bloodpixelhero__game-music-loop-14 (1).wav-e57a7650b453e7cad61b912a1b81bd8f.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

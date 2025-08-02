@@ -1,6 +1,37 @@
-[gd_resource type="AudioBusLayout" load_steps=2 format=3 uid="uid://cskl5pvhdyj5b"]
+[gd_resource type="AudioBusLayout" load_steps=9 format=3 uid="uid://cskl5pvhdyj5b"]
 
 [sub_resource type="AudioEffectPhaser" id="AudioEffectPhaser_j3pel"]
+resource_name = "Phaser"
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_j3pel"]
+resource_name = "Reverb"
+room_size = 0.15
+damping = 0.65
+spread = 0.28
+hipass = 0.26
+
+[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_g28q7"]
+resource_name = "LowPassFilter"
+cutoff_hz = 1374.0
+resonance = 0.13
+
+[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_j3pel"]
+resource_name = "LowPassFilter"
+cutoff_hz = 1062.0
+
+[sub_resource type="AudioEffectPhaser" id="AudioEffectPhaser_g28q7"]
+resource_name = "Phaser"
+depth = 0.4
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_g28q7"]
+resource_name = "Reverb"
+room_size = 0.46
+
+[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_n8wo2"]
+resource_name = "LowPassFilter"
+cutoff_hz = 1218.0
+
+[sub_resource type="AudioEffectPhaser" id="AudioEffectPhaser_n8wo2"]
 resource_name = "Phaser"
 
 [resource]
@@ -11,4 +42,30 @@ bus/1/bypass_fx = false
 bus/1/volume_db = 4.233511
 bus/1/send = &"Master"
 bus/1/effect/0/effect = SubResource("AudioEffectPhaser_j3pel")
-bus/1/effect/0/enabled = true
+bus/1/effect/0/enabled = false
+bus/1/effect/1/effect = SubResource("AudioEffectReverb_j3pel")
+bus/1/effect/1/enabled = false
+bus/1/effect/2/effect = SubResource("AudioEffectLowPassFilter_g28q7")
+bus/1/effect/2/enabled = false
+bus/2/name = &"Music"
+bus/2/solo = false
+bus/2/mute = false
+bus/2/bypass_fx = false
+bus/2/volume_db = 0.0
+bus/2/send = &"Master"
+bus/2/effect/0/effect = SubResource("AudioEffectLowPassFilter_j3pel")
+bus/2/effect/0/enabled = true
+bus/2/effect/1/effect = SubResource("AudioEffectPhaser_g28q7")
+bus/2/effect/1/enabled = true
+bus/2/effect/2/effect = SubResource("AudioEffectReverb_g28q7")
+bus/2/effect/2/enabled = true
+bus/2/effect/3/effect = SubResource("AudioEffectLowPassFilter_n8wo2")
+bus/2/effect/3/enabled = false
+bus/3/name = &"SimpleFX"
+bus/3/solo = false
+bus/3/mute = false
+bus/3/bypass_fx = false
+bus/3/volume_db = 0.0
+bus/3/send = &"Master"
+bus/3/effect/0/effect = SubResource("AudioEffectPhaser_n8wo2")
+bus/3/effect/0/enabled = false

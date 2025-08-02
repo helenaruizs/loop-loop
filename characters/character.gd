@@ -2,12 +2,18 @@ class_name Character
 
 extends CharacterBody2D
 
+var music_bus_index := AudioServer.get_bus_index("Music") # Or whatever name you used
+var filter_effect_phaser := AudioServer.get_bus_effect(music_bus_index, 1) as AudioEffectLowPassFilter
+var filter_effect_reverb := AudioServer.get_bus_effect(music_bus_index, 2) as AudioEffectLowPassFilter
+var filter_effect_lowpass := AudioServer.get_bus_effect(music_bus_index, 0) as AudioEffectLowPassFilter
+
 # Tweak these values for your look:
 const NORMAL_SCALE: Vector2 = Vector2(1, 1)
 const JUMP_STRETCH: Vector2 = Vector2(0.95, 1.1)  # Tall and thin
 const LAND_SQUASH: Vector2 = Vector2(1.24, 0.78)   # Short and wide
 const TWEEN_TIME: float = 0.08
 
+var music: AudioStreamPlayer
 @onready var ray_down: RayCast2D = $RayDown
 @onready var ray_up: RayCast2D = $RayUp
 @onready var ray_right: RayCast2D = $RayRight
@@ -25,6 +31,7 @@ const TWEEN_TIME: float = 0.08
 @export var jump_buffer_duration: float = 0.14   
 @export var jump_power := -1100.0
 
+var color_name: Globals.ColorNames
 var hl_color: Color
 var character_color: Color
 # cache the rays and their last‐hit markers
@@ -137,8 +144,32 @@ func char_physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0.0, deacceleration * delta)
 
 	move_and_slide()
+	
+		# Normalized screen position
+	var viewport_size := get_viewport().get_visible_rect().size
+	var norm_x :float = clamp(position.x / viewport_size.x, 0, 1)
+	var norm_y : float = clamp(position.y / viewport_size.y, 0, 1)
 
+# Use a gentle subrange
+	var min_room := 0.6
+	var max_room := 0.8
+	var room_size : float= lerp(min_room, max_room, norm_x)
 
+	var min_depth := 0.4
+	var max_depth := 0.8
+	var depth : float= lerp(min_depth, max_depth, norm_y)
+
+	var min_cutoff := 2000.0
+	var max_cutoff := 4500.0
+	var cutoff : float= lerp(min_cutoff, max_cutoff, norm_y)
+# Apply to audio effect if it's valid
+	#if filter_effect_phaser:
+		#filter_effect_phaser.set("depth", depth)
+	#if filter_effect_reverb:
+		#filter_effect_reverb.set("room_size", room_size)
+	#if filter_effect_lowpass:
+		#filter_effect_lowpass.set("cutoff_hz", cutoff)
+		
 func tween_shader(intensity_start: float, intensity_end: float) -> void:
 	var tween: Tween = create_tween()
 	var duration:= 0.1

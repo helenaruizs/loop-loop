@@ -10,10 +10,11 @@ const CHARACTER = preload("uid://b8ml3toppckaw")
 @onready var fx_click: AudioStreamPlayer = $FX_Click
 @onready var fx_click_2: AudioStreamPlayer = $FX_Click2
 @onready var camera: Camera2D = $Camera2D
+@onready var music: AudioStreamPlayer = $Music
 
 var characters: Array[Character]
 var characters_number: int
-var tempo: float = 0.5
+@export var tempo: float = 0.5
 
 @onready var spawn_points := []
 
@@ -30,8 +31,10 @@ var turn := 0
 @export var max_time := 4
 var current_time := 0
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	music.stop()
 	for child in characters_root.get_children():
 		if child is Node2D:
 			spawn_points.append(child)
@@ -48,7 +51,7 @@ func _ready() -> void:
 		#char.set_shader_colors(char.character_color, char.hl_color)
 		#char.set_tempo(tempo)
 	#current_char = characters[0]
-	current_color = Globals.colors[0]
+	current_color = Globals.bg_colors[0]
 	#current_char.set_shader_intensity(1.0)
 	#current_char.darken(0.0)
 	change_light(current_color)
@@ -100,15 +103,19 @@ func init_character(char: Character, index: int) -> void:
 	#char.visible = false
 	char.character_color = Globals.colors[index]
 	char.hl_color = Globals.hl_colors[index]
+	char.color_name = index
 	char.set_shader_colors(char.character_color, char.hl_color)
 	char.set_tempo(tempo)
+	char.music = music
 	
 func new_turn() -> void:
 	turn += 1
-	play_with_random_pitch(fx_click_2)
+	fx_click_2.play()
 	ui.bg.update_bg_fx(1.0)
-	print("Turn:", turn)
-
+	
+	if turn == 1:
+		music.play()
+	
 	if turn <= characters_number:
 		# Clean up previous char if any
 		if current_char:
@@ -124,10 +131,9 @@ func new_turn() -> void:
 
 		char.animation_player.play("idle_bob")
 		char.darken(0.0)
-		current_color = Globals.colors[current_index]
+		current_color = Globals.bg_colors[current_index]
 		char.tween_shader(0.0, 1.0)
 		change_light(current_color)
-		print("Current index:", current_index)
 		return  # Do not run cycling logic below!
 
 	# From here on, just cycle
@@ -141,10 +147,9 @@ func new_turn() -> void:
 	current_char = characters[current_index]
 	current_char.animation_player.play("idle_bob")
 	current_char.darken(0.0)
-	current_color = Globals.colors[current_index]
+	current_color = Globals.bg_colors[current_index]
 	current_char.tween_shader(0.0, 1.0)
 	change_light(current_color)
-	print("Current index:", current_index)
 
 
 

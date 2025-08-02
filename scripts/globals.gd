@@ -2,6 +2,7 @@ extends Node
 
 
 signal start_game
+signal level_completed(index: int)
 
 enum ColorNames {
 	COLOR_01,
@@ -19,6 +20,10 @@ enum ColorNames {
 @export var color_03: Color
 @export var color_04: Color
 
+@export var bg_color_01: Color
+@export var bg_color_02: Color
+@export var bg_color_03: Color
+@export var bg_color_04: Color
 
 @export var hl_color_01: Color
 @export var hl_color_02: Color
@@ -29,6 +34,7 @@ var colors: Array[Color] = []
 
 var hl_colors: Array[Color] = []
 
+var bg_colors: Array[Color] = []
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	colors = [
@@ -44,6 +50,14 @@ func _ready() -> void:
 		Globals.hl_color_03,
 		Globals.hl_color_04,	
 	]
+
+	bg_colors = [
+		Globals.bg_color_01,
+		Globals.bg_color_02,
+		Globals.bg_color_03,
+		Globals.bg_color_04,	
+	]
+
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
