@@ -17,6 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+ScreenTransition="*res://scenes/screen_transition.tscn"
 Globals="*res://scripts/globals.tscn"
 StageManager="*res://scenes/stage_manager.tscn"
 

@@ -1,6 +1,5 @@
 extends Node
 
-const CHARACTER = preload("uid://b8ml3toppckaw")
 
 @onready var main_light: DirectionalLight2D = $DirectionalLight2D
 @onready var animation_player: AnimationPlayer = $UI/AnimationPlayer
@@ -87,7 +86,8 @@ func _on_timer_timeout() -> void:
 		current_time = 0
 
 func spawn_character(idx: int) -> Character:
-	var char: Character = CHARACTER.instantiate()
+	var char_type: PackedScene = spawn_points[idx].get_char_scene()
+	var char: Character = char_type.instantiate()
 	characters_root.add_child(char)
 	characters.append(char)
 	init_character(char, idx)

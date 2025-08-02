@@ -1,253 +1,13 @@
-[gd_scene load_steps=21 format=3 uid="uid://c2t7i2ohmbnpi"]
+[gd_scene load_steps=10 format=3 uid="uid://c2t7i2ohmbnpi"]
 
 [ext_resource type="Script" uid="uid://hbrtjssy20ph" path="res://levels/main.gd" id="1_py2r8"]
 [ext_resource type="PackedScene" uid="uid://ij1x6ui1s3wd" path="res://maps/map01.tscn" id="2_py2r8"]
 [ext_resource type="AudioStream" uid="uid://13abppssai4s" path="res://assets/sound/fx/quarter01.wav" id="3_6q0d3"]
+[ext_resource type="PackedScene" uid="uid://cbgw6o8yk3bom" path="res://characters/spawn_point.tscn" id="3_ed0h8"]
 [ext_resource type="AudioStream" uid="uid://dvyxiid0u6unq" path="res://assets/sound/fx/beat01.wav" id="4_7i3qh"]
-[ext_resource type="Script" uid="uid://cxlj50ug710sm" path="res://scenes/ui.gd" id="5_myk8p"]
-[ext_resource type="Material" uid="uid://ctt4kwjmmr510" path="res://assets/materials/bg_effect.tres" id="6_ta2wi"]
-[ext_resource type="Script" uid="uid://bcrevpn8mvkgh" path="res://scenes/bg_effect.gd" id="7_1yxjm"]
-[ext_resource type="Texture2D" uid="uid://cugtnoi5mavtn" path="res://assets/anims/sprites/hand_00.png" id="8_exmlb"]
-[ext_resource type="Texture2D" uid="uid://ctelnkoes06ge" path="res://assets/anims/sprites/hand_01.png" id="9_yd4tc"]
-[ext_resource type="Texture2D" uid="uid://bkn11etpfjnrv" path="res://assets/anims/sprites/hand_02.png" id="10_yjn78"]
-[ext_resource type="Texture2D" uid="uid://bmwpdw6eu2eq2" path="res://assets/anims/sprites/hand_03.png" id="11_5hgwr"]
-[ext_resource type="Texture2D" uid="uid://ctnpa13xcf7ig" path="res://assets/anims/sprites/hand_04.png" id="12_ha7ol"]
+[ext_resource type="PackedScene" uid="uid://bt8gfiukro0ny" path="res://ui/ui.tscn" id="4_x5epe"]
+[ext_resource type="PackedScene" uid="uid://cnoyo2u57e6xo" path="res://scenes/camera.tscn" id="7_xq8ic"]
 [ext_resource type="AudioStream" uid="uid://c8mdu3gwfqy0" path="res://assets/sound/music/music_01.tres" id="13_o18in"]
-
-[sub_resource type="Animation" id="Animation_s07ge"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("HandCountdown:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"default"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("HandCountdown:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("HandCountdown:modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("HandCountdown:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("HandCountdown:rotation")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("../Scrim:color")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.13, 0.13, 0.13, 0.39215687)]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath(".:visible")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("../Scrim:visible")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
-[sub_resource type="Animation" id="Animation_21ko3"]
-resource_name = "intro_hand"
-length = 4.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("HandCountdown:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.033333335),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"default"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("HandCountdown:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.033333335, 1, 2, 3, 4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("../Scrim:color")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 3.9333334, 4.0333333),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(0.059999995, 0.059999995, 0.059999995, 0.8039216), Color(0.059999995, 0.059999995, 0.059999995, 0.8039216), Color(0, 0, 0, 1)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("HandCountdown:rotation")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.8344369, 1.0333333, 1.034437, 1.8, 1.9988964, 2, 2.765563, 2.9993634, 3, 3.76603, 4.0405827, 4.041686, 4.5),
-"transitions": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-"update": 0,
-"values": [0.04014257279586978, 0.23911010752322395, 0.0, 0.0, 0.23911010752322395, 0.0, 0.0, 0.23911010752322395, 0.0, 0.0, 0.23911010752322395, 0.0, 0.0, 0.0]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("HandCountdown:position")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.8344369, 1.0333333, 1.8, 1.9988964, 2.765563, 2.9993634, 3.76603, 4.0405827, 4.5),
-"transitions": PackedFloat32Array(2, 2, 0, 0, 0, 0, 0, 0, 0, 0),
-"update": 0,
-"values": [Vector2(50, 50), Vector2(29.03, 0), Vector2(0, 0), Vector2(29.03, 0), Vector2(0, 0), Vector2(29.03, 0), Vector2(0, 0), Vector2(29.03, 0), Vector2(0, 0), Vector2(0, 0)]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("HandCountdown:modulate")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.8333333),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath(".:visible")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0, 4.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("../Scrim:visible")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0, 4.0333333),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_iwo8l"]
-_data = {
-&"RESET": SubResource("Animation_s07ge"),
-&"intro_hand": SubResource("Animation_21ko3")
-}
-
-[sub_resource type="SystemFont" id="SystemFont_tbgi4"]
-font_weight = 600
-
-[sub_resource type="LabelSettings" id="LabelSettings_tefeu"]
-font = SubResource("SystemFont_tbgi4")
-font_size = 72
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_j7211"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("8_exmlb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("9_yd4tc")
-}, {
-"duration": 1.0,
-"texture": ExtResource("10_yjn78")
-}, {
-"duration": 1.0,
-"texture": ExtResource("11_5hgwr")
-}, {
-"duration": 1.0,
-"texture": ExtResource("12_ha7ol")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
 
 [sub_resource type="Environment" id="Environment_tefeu"]
 background_mode = 3
@@ -271,14 +31,16 @@ script = ExtResource("1_py2r8")
 
 [node name="Characters" type="Node2D" parent="."]
 
-[node name="Spawn1" type="Node2D" parent="Characters"]
-position = Vector2(197, 375)
+[node name="Spawn1" parent="Characters" instance=ExtResource("3_ed0h8")]
+position = Vector2(201, 392)
 
-[node name="Spawn2" type="Node2D" parent="Characters"]
-position = Vector2(1716, 379)
+[node name="Spawn2" parent="Characters" instance=ExtResource("3_ed0h8")]
+position = Vector2(1709, 435)
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.5
+
+[node name="UI" parent="." instance=ExtResource("4_x5epe")]
 
 [node name="FX_Click" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_6q0d3")
@@ -290,79 +52,8 @@ stream = ExtResource("4_7i3qh")
 volume_db = -4.0
 bus = &"FX"
 
-[node name="UI" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("5_myk8p")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="UI"]
-root_node = NodePath("../IntroAnim")
-libraries = {
-&"": SubResource("AnimationLibrary_iwo8l")
-}
-autoplay = "intro_hand"
-
-[node name="TimerCounter" type="Label" parent="UI"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -199.0
-offset_top = 18.0
-offset_right = -34.0
-offset_bottom = 117.0
-grow_horizontal = 0
-text = "0"
-label_settings = SubResource("LabelSettings_tefeu")
-horizontal_alignment = 2
-
-[node name="ColorRect" type="ColorRect" parent="UI"]
-z_index = -100
-material = ExtResource("6_ta2wi")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.27387273, 0.27387273, 0.27387273, 1)
-script = ExtResource("7_1yxjm")
-shader_material = ExtResource("6_ta2wi")
-
-[node name="Scrim" type="ColorRect" parent="UI"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.13, 0.13, 0.13, 0.39215687)
-
-[node name="IntroAnim" type="Control" parent="UI"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="HandCountdown" type="AnimatedSprite2D" parent="UI/IntroAnim"]
-scale = Vector2(0.7, 0.7)
-sprite_frames = SubResource("SpriteFrames_j7211")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-anchor_mode = 0
+[node name="Camera2D" parent="." instance=ExtResource("7_xq8ic")]
+position = Vector2(956, 547)
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
 position = Vector2(964, -164)

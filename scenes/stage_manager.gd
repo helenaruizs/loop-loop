@@ -4,6 +4,9 @@ var level_index: int = 0
 
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
 
+@export var levels_array: Array[PackedScene]
+@export var scenes: Array[PackedScene]
+
 var levels := [
 	"res://levels/main.tscn",
 	"res://levels/level01.tscn",
@@ -19,25 +22,25 @@ func _ready() -> void:
 	Globals.level_completed.connect(level_complete)
 	# Add more connections as needed
 
-	show_title_screen()
+	show_title_screen(scenes[0])
 
 func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("DEBUG_LEVEL_COMPLETE"):
 		Globals.level_completed.emit()
 		level_complete()
 
-func show_title_screen() -> void:
-	change_scene("res://scenes/title.tscn")
+func show_title_screen(scene: PackedScene) -> void:
+	change_scene(scene)
 
 func start_game() -> void:
 	level_index = 0
 	load_level(level_index)
 
 func load_level(index: int) -> void:
-	if index >= levels.size():
-		show_thank_you_screen()
+	if index >= levels_array.size():
+		show_thank_you_screen(scenes[2])
 	else:
-		change_scene(levels[index])
+		change_scene(levels_array[index])
 
 func level_complete() -> void:
 	get_tree().paused = true
@@ -48,23 +51,24 @@ func level_complete() -> void:
 	await get_tree().create_timer(0.4).timeout
 	get_tree().paused = false
 	level_index += 1
+	ScreenTransition._play_wipe_out()
 	load_level(level_index)
 
 func level_failed() -> void:
 	load_level(level_index)
 
-func show_thank_you_screen() -> void:
-	change_scene("res://scenes/ThankYou.tscn")
+func show_thank_you_screen(scene: PackedScene) -> void:
+	change_scene(scene)
 
 func restart_level() -> void:
 	load_level(level_index)
 
-func change_scene(path: String) -> void:
-	var err: = get_tree().change_scene_to_file(path)
+func change_scene(scene: PackedScene) -> void:
+	var err: = get_tree().change_scene_to_packed(scene)
 	if err != OK:
-		push_error("StageManager: ERROR! Could not change scene to: %s" % path)
+		push_error("StageManager: ERROR! Could not change scene to: %s" % scene)
 	else:
-		print("StageManager: Scene changed to:", path)
+		print("StageManager: Scene changed to:", scene)
 
 
 func do_freeze_and_zoom_effect() -> void:

@@ -1,0 +1,23 @@
+class_name MainCamera
+
+extends Camera2D
+
+@export var max_shake: float = 10.0
+@export var shake_fade: float = 10.0
+
+var _shake_strength: float = 0.0
+	
+func _ready() -> void:
+	Globals.level_completed.connect(trigger_shake_level_complete)
+	
+func _process(delta: float) -> void:
+	if _shake_strength > 0:
+		_shake_strength = lerp(_shake_strength, 0.0, shake_fade * delta)
+		offset = Vector2(randf_range(-_shake_strength, _shake_strength),randf_range(-_shake_strength, _shake_strength))
+
+func trigger_shake() -> void:
+	_shake_strength = max_shake
+
+
+func trigger_shake_level_complete() -> void:
+	_shake_strength = max_shake

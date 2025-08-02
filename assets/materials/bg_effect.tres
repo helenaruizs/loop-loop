@@ -3,12 +3,13 @@
 [ext_resource type="Shader" uid="uid://ccangdud27sd4" path="res://assets/materials/bg.gdshader" id="1_1qexp"]
 
 [resource]
+resource_local_to_scene = true
 shader = ExtResource("1_1qexp")
-shader_parameter/color_a = Color(0.26, 0.26, 0.26, 1)
-shader_parameter/color_b = Color(0.22, 0.22, 0.22, 1)
-shader_parameter/color_c = Color(0.31, 0.31, 0.31, 1)
-shader_parameter/swirl_intensity = 2.0350000000034925
+shader_parameter/color_a = Color(0.34814695, 0.17062098, 0.4104909, 1)
+shader_parameter/color_b = Color(0.19626714, 0.19201425, 0.38401413, 1)
+shader_parameter/color_c = Color(0.183963, 0.26449355, 0.6377218, 1)
+shader_parameter/swirl_intensity = 0.08
 shader_parameter/swirl_speed = 0.2
 shader_parameter/swirl_direction = 0.0
-shader_parameter/halftone_scale = 100.0
-shader_parameter/halftone_sharpness = 2.0
+shader_parameter/halftone_scale = 54.36000000000058
+shader_parameter/halftone_sharpness = -0.6100000000005821

@@ -1,14 +1,52 @@
-[gd_scene load_steps=6 format=3 uid="uid://bjx7oapnevy5d"]
+[gd_scene load_steps=14 format=3 uid="uid://bjx7oapnevy5d"]
 
 [ext_resource type="Material" uid="uid://ctt4kwjmmr510" path="res://assets/materials/bg_effect.tres" id="1_4ignj"]
 [ext_resource type="Script" uid="uid://d0886443jke8w" path="res://scenes/title.gd" id="1_p6dhs"]
 [ext_resource type="Script" uid="uid://c3jxnsjo08g0t" path="res://scripts/button.gd" id="2_wosw1"]
+[ext_resource type="Texture2D" uid="uid://cij8m462j23ch" path="res://assets/fx/particle_textures/Untitled-1_0000_Layer-2.png" id="4_hiwto"]
+[ext_resource type="Texture2D" uid="uid://bfw73hnomo3bl" path="res://assets/fx/particle_textures/Untitled-1_0002_Layer-4.png" id="5_w65of"]
+[ext_resource type="Texture2D" uid="uid://b65fbg32exymo" path="res://assets/fx/particle_textures/Untitled-1_0003_Layer-5.png" id="6_ygloa"]
+[ext_resource type="Texture2D" uid="uid://pyajiwhpvp0h" path="res://assets/fx/particle_textures/Untitled-1_0004_Layer-6.png" id="7_6civk"]
+[ext_resource type="Texture2D" uid="uid://tx5xlksbdsu4" path="res://assets/fx/particle_textures/Untitled-1_0005_Layer-7.png" id="8_7af2g"]
+[ext_resource type="Texture2D" uid="uid://kf2vw78n3jed" path="res://assets/fx/particle_textures/Untitled-1_0001_Layer-3.png" id="9_81wt4"]
 
 [sub_resource type="SystemFont" id="SystemFont_wosw1"]
 
 [sub_resource type="Theme" id="Theme_p6dhs"]
 default_font = SubResource("SystemFont_wosw1")
 default_font_size = 40
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_kcc3o"]
+frames = 6
+speed_scale = 9.5
+frame_0/texture = ExtResource("4_hiwto")
+frame_1/texture = ExtResource("5_w65of")
+frame_1/duration = 1.0
+frame_2/texture = ExtResource("6_ygloa")
+frame_2/duration = 1.0
+frame_3/texture = ExtResource("7_6civk")
+frame_3/duration = 1.0
+frame_4/texture = ExtResource("8_7af2g")
+frame_4/duration = 1.0
+frame_5/texture = ExtResource("9_81wt4")
+frame_5/duration = 1.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pyl7j"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(960, 540, 1)
+angle_min = 29.500011
+angle_max = 253.50002
+radial_velocity_min = 12.449977
+radial_velocity_max = 12.449977
+gravity = Vector3(0, 0, 0)
+radial_accel_min = 44.449997
+radial_accel_max = 88.71999
+scale_min = 0.5
+scale_max = 1.1
+scale_over_velocity_max = 352.65
+anim_speed_min = -2.2
+anim_speed_max = 5.5
 
 [node name="Title" type="Control"]
 layout_mode = 3
@@ -53,5 +91,16 @@ script = ExtResource("2_wosw1")
 layout_mode = 2
 theme = SubResource("Theme_p6dhs")
 text = "QUIT"
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(962, 531)
+texture = SubResource("AnimatedTexture_kcc3o")
+lifetime = 3.55
+interp_to_end = 0.14
+explosiveness = 0.05
+randomness = 0.3
+visibility_rect = Rect2(-960, -540, 1920, 1080)
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_pyl7j")
 
 [connection signal="pressed" from="VBoxContainer/Play" to="." method="_on_play_pressed"]

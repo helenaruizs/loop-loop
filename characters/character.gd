@@ -152,7 +152,7 @@ func char_physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0.0, deacceleration * delta)
 	
 	# --- SKEW EFFECT BASED ON DIRECTION ---
-	var max_skew := 0.04 # Radians, tweak as desired
+	var max_skew := 0.015 # Radians, tweak as desired
 	var target_skew := max_skew * input_dir
 	sprite.skew = lerp(sprite.skew, target_skew, 0.17)
 	

@@ -1,0 +1,108 @@
+{
+	"textures": [
+		{
+			"image": "title_particles.png",
+			"size": {
+				"w": 191,
+				"h": 173
+			},
+			"sprites": [
+				{
+					"filename": "Untitled-1_0005_Layer-7.png",
+					"region": {
+						"x": 1,
+						"y": 1,
+						"w": 33,
+						"h": 34
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "Untitled-1_0001_Layer-3.png",
+					"region": {
+						"x": 36,
+						"y": 1,
+						"w": 48,
+						"h": 51
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "Untitled-1_0003_Layer-5.png",
+					"region": {
+						"x": 86,
+						"y": 1,
+						"w": 49,
+						"h": 52
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "Untitled-1_0002_Layer-4.png",
+					"region": {
+						"x": 137,
+						"y": 1,
+						"w": 53,
+						"h": 59
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "Untitled-1_0004_Layer-6.png",
+					"region": {
+						"x": 1,
+						"y": 54,
+						"w": 79,
+						"h": 87
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "Untitled-1_0000_Layer-2.png",
+					"region": {
+						"x": 82,
+						"y": 62,
+						"w": 103,
+						"h": 110
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:9d18dcd6fc42d6df977f56948b850b65:73fc0cae897ef28a175c7184dd78f011:dc6fd579c48539327e7c827f40a15452$"
+	}
+}

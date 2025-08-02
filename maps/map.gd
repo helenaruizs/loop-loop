@@ -27,8 +27,9 @@ func _ready() -> void:
 	_spawn_tile_markers()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if objectives_color_01.size() == objectives_color_01_hits.size() and objectives_color_02.size() == objectives_color_02_hits.size():
+		print("BOOM")
 		Globals.emit_signal("level_completed")
 
 func _spawn_tile_markers() -> void:
@@ -85,6 +86,9 @@ func _on_marker_triggered(marker: TileMarker, color: Globals.ColorNames) -> void
 		Globals.ColorNames.COLOR_04:
 			objectives_color_04_hits.append(marker)
 	
+	if objectives_color_01.size() == objectives_color_01_hits.size() and objectives_color_02.size() == objectives_color_02_hits.size():
+		print("BOOM")
+		Globals.emit_signal("level_completed")
 	print(objectives_color_01_hits.size())
 	print(objectives_color_01.size())
 	
