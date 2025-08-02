@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://ccdmvmq676ddt"]
+
+[ext_resource type="Shader" uid="uid://b2rnejcr8ruuf" path="res://assets/materials/blink_fx.gdshader" id="1_rh6co"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_rh6co")

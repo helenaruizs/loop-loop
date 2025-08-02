@@ -9,9 +9,12 @@ var filter_effect_lowpass := AudioServer.get_bus_effect(music_bus_index, 0) as A
 
 # Tweak these values for your look:
 const NORMAL_SCALE: Vector2 = Vector2(1, 1)
-const JUMP_STRETCH: Vector2 = Vector2(0.95, 1.1)  # Tall and thin
-const LAND_SQUASH: Vector2 = Vector2(1.24, 0.78)   # Short and wide
-const TWEEN_TIME: float = 0.08
+const JUMP_STRETCH: Vector2 = Vector2(0.89, 1.2)  # Tall and thin
+const LAND_SQUASH: Vector2 = Vector2(1.4, 0.78)   # Short and wide
+const TWEEN_TIME: float = 0.2
+
+const WALK_SQUASH: Vector2 = Vector2(1.24, 0.78)   # Short and wide
+const WALK_STRETCH: Vector2 = Vector2(0.95, 1.1)  # Tall and thin
 
 var music: AudioStreamPlayer
 @onready var ray_down: RayCast2D = $RayDown
@@ -56,6 +59,7 @@ func _ready() -> void:
 	last_hits[ray_right] = null
 	last_hits[ray_down]  = null
 	last_hits[ray_left]  = null
+	Globals.level_completed.connect(on_level_completed)
 
 
 
@@ -138,11 +142,20 @@ func char_physics_process(delta: float) -> void:
 	# — HORIZONTAL INPUT & SMOOTH MOVE —
 	var input_dir: float = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	if abs(input_dir) > 0.01:
+		sprite.scale.x = 1.2
+		sprite.scale.y = 0.9
 		sprite.flip_h = input_dir < 0.0
 		velocity.x = move_toward(velocity.x, input_dir * speed, acceleration * delta)
 	else:
+		sprite.scale.x = 1.0
+		sprite.scale.y = 1.0
 		velocity.x = move_toward(velocity.x, 0.0, deacceleration * delta)
-
+	
+	# --- SKEW EFFECT BASED ON DIRECTION ---
+	var max_skew := 0.04 # Radians, tweak as desired
+	var target_skew := max_skew * input_dir
+	sprite.skew = lerp(sprite.skew, target_skew, 0.17)
+	
 	move_and_slide()
 	
 		# Normalized screen position
@@ -187,3 +200,6 @@ func set_tempo(tempo: float) -> void:
 
 func darken(value: float) -> void:
 	sprite.material.set_shader_parameter("multiply_intensity", value)
+
+func on_level_completed() -> void:
+	set_shader_colors(Color.WHITE, Color.WHITE)

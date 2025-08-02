@@ -1,0 +1,34 @@
+shader_type canvas_item;
+render_mode unshaded;
+
+uniform vec4 blink_color : source_color;
+uniform float blink_intensity = 0.0;
+uniform vec4 albedo_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
+
+uniform vec4 multiply_color : source_color = vec4(0.0, 0.0, 0.0, 1.0); // the tint
+uniform float multiply_intensity = 0.0; // 0 = no multiply, 1 = full multiply
+
+vec3 overlay_blend(vec3 base, vec3 blend) {
+    return mix(
+        2.0 * base * blend,
+        1.0 - 2.0 * (1.0 - base) * (1.0 - blend),
+        step(0.5, base)
+    );
+}
+
+void fragment() {
+    vec4 color = texture(TEXTURE, UV);
+
+    // Apply albedo tint (multiplicative)
+    color.rgb *= albedo_color.rgb;
+    color.a *= albedo_color.a;
+
+    // Overlay blink_color over color, modulated by blink_intensity
+    vec3 overlay = overlay_blend(color.rgb, blink_color.rgb);
+    color.rgb = mix(color.rgb, overlay, blink_intensity * blink_color.a); // respect blink_color alpha
+
+    // Multiply layer (tint/shadow/etc)
+    color.rgb = mix(color.rgb, color.rgb * multiply_color.rgb, multiply_intensity * multiply_color.a);
+
+    COLOR = color;
+}

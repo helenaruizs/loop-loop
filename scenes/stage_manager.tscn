@@ -1,6 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://cf132fnn2rne0"]
+[gd_scene load_steps=3 format=3 uid="uid://cf132fnn2rne0"]
 
 [ext_resource type="Script" uid="uid://ctyu4qcxyfvyw" path="res://scenes/stage_manager.gd" id="1_r8c87"]
+[ext_resource type="AudioStream" uid="uid://y6iq6ddfvwt8" path="res://assets/sound/fx/snap.wav" id="2_oeeoj"]
 
 [node name="StageManager" type="Node"]
 script = ExtResource("1_r8c87")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_oeeoj")
+volume_db = -5.0
+pitch_scale = 0.89
+bus = &"EndLevel"

@@ -27,6 +27,7 @@ func _ready() -> void:
 	overlay.visible = false
 	blink.visible = false
 	darken(0.0)
+	Globals.level_completed.connect(on_level_completed)
 
 func on_marker_enter(character: Character) -> void:
 	set_shader_colors(character.character_color, character.hl_color)
@@ -64,3 +65,6 @@ func darken(value: float) -> void:
 
 func set_objective(_color: Color) -> void:
 	sprite.material.set_shader_parameter("albedo_color", _color)
+
+func on_level_completed() -> void:
+	set_shader_colors(Color.WHITE, Color.WHITE)

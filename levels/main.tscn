@@ -360,7 +360,6 @@ scale = Vector2(0.7, 0.7)
 sprite_frames = SubResource("SpriteFrames_j7211")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-visible = false
 anchor_mode = 0
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
@@ -374,6 +373,7 @@ max_distance = 3450.0
 environment = SubResource("Environment_tefeu")
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("13_1fput")
 volume_db = -19.115
 bus = &"Music"

@@ -1,4 +1,4 @@
-[gd_resource type="AudioBusLayout" load_steps=9 format=3 uid="uid://cskl5pvhdyj5b"]
+[gd_resource type="AudioBusLayout" load_steps=11 format=3 uid="uid://cskl5pvhdyj5b"]
 
 [sub_resource type="AudioEffectPhaser" id="AudioEffectPhaser_j3pel"]
 resource_name = "Phaser"
@@ -33,6 +33,21 @@ cutoff_hz = 1218.0
 
 [sub_resource type="AudioEffectPhaser" id="AudioEffectPhaser_n8wo2"]
 resource_name = "Phaser"
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_n8wo2"]
+resource_name = "Reverb"
+room_size = 0.4
+spread = 0.0
+hipass = 0.25
+dry = 0.15
+wet = 0.25
+
+[sub_resource type="AudioEffectPhaser" id="AudioEffectPhaser_5t1r3"]
+resource_name = "Phaser"
+range_min_hz = 249.351
+range_max_hz = 875.534
+feedback = 0.4
+depth = 3.6
 
 [resource]
 bus/1/name = &"FX"
@@ -69,3 +84,13 @@ bus/3/volume_db = 0.0
 bus/3/send = &"Master"
 bus/3/effect/0/effect = SubResource("AudioEffectPhaser_n8wo2")
 bus/3/effect/0/enabled = false
+bus/4/name = &"EndLevel"
+bus/4/solo = false
+bus/4/mute = false
+bus/4/bypass_fx = false
+bus/4/volume_db = 0.0
+bus/4/send = &"Master"
+bus/4/effect/0/effect = SubResource("AudioEffectReverb_n8wo2")
+bus/4/effect/0/enabled = true
+bus/4/effect/1/effect = SubResource("AudioEffectPhaser_5t1r3")
+bus/4/effect/1/enabled = true

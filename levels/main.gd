@@ -129,6 +129,8 @@ func new_turn() -> void:
 		current_char = char
 		current_index = turn - 1
 
+		char.animation_player.play("blink")
+		await char.animation_player.animation_finished
 		char.animation_player.play("idle_bob")
 		char.darken(0.0)
 		current_color = Globals.bg_colors[current_index]
@@ -145,6 +147,8 @@ func new_turn() -> void:
 
 	current_index = (current_index + 1) % characters.size()
 	current_char = characters[current_index]
+	current_char.animation_player.play("blink")
+	await current_char.animation_player.animation_finished
 	current_char.animation_player.play("idle_bob")
 	current_char.darken(0.0)
 	current_color = Globals.bg_colors[current_index]
