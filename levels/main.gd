@@ -56,12 +56,10 @@ func _ready() -> void:
 	change_light(current_color)
 
 func _physics_process(delta: float) -> void:
+	map.check_win_condition()
 	if current_char:
 		current_char.char_physics_process(delta)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("restart_level"):

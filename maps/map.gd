@@ -26,11 +26,6 @@ func _ready() -> void:
 	tile_size = tilemap.tile_set.tile_size
 	_spawn_tile_markers()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta: float) -> void:
-	if objectives_color_01.size() == objectives_color_01_hits.size() and objectives_color_02.size() == objectives_color_02_hits.size():
-		print("BOOM")
-		Globals.emit_signal("level_completed")
 
 func _spawn_tile_markers() -> void:
 	tile_markers.clear()
@@ -85,10 +80,6 @@ func _on_marker_triggered(marker: TileMarker, color: Globals.ColorNames) -> void
 			objectives_color_03_hits.append(marker)
 		Globals.ColorNames.COLOR_04:
 			objectives_color_04_hits.append(marker)
-	
-	if objectives_color_01.size() == objectives_color_01_hits.size() and objectives_color_02.size() == objectives_color_02_hits.size():
-		print("BOOM")
-		Globals.emit_signal("level_completed")
 	print(objectives_color_01_hits.size())
 	print(objectives_color_01.size())
 	
@@ -113,3 +104,8 @@ func compare_arrays(a: Array, b: Array) -> bool:
 	a_sorted.sort() # sorts by object id
 	b_sorted.sort()
 	return a_sorted == b_sorted
+
+func check_win_condition() -> void:
+	if objectives_color_01.size() == objectives_color_01_hits.size() and objectives_color_02.size() == objectives_color_02_hits.size():
+		print("BOOM")
+		Globals.emit_signal("level_completed")

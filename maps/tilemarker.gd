@@ -35,7 +35,7 @@ func on_marker_enter(character: Character) -> void:
 	overlay.visible = true
 	if is_objective and character.color_name == objective_color:
 		emit_signal("objective_triggered_on", self, objective_color)
-
+	get_parent().check_win_condition()
 
 func on_marker_exit() -> void:
 	set_shader_intensity(0.0)
