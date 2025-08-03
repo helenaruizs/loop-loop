@@ -23,17 +23,27 @@ var objectives_color_04_hits: Array[TileMarker] =[]
 
 var all_objectives: Array[TileMarker] = []
 
+var gameroot: Node
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	tile_size = tilemap.tile_set.tile_size
 	_spawn_tile_markers()
-	print(all_objectives)
+	for marker: TileMarker in all_objectives:
+		marker.completed = false
 
 func _spawn_tile_markers() -> void:
 	tile_markers.clear()
+	all_objectives.clear()
+
 	for cell: Vector2i in tilemap.get_used_cells():
+		# 1) Log which cell we’re looking at
+		print("Map: checking cell ", cell)
+
 		var placed_marker: TileMarker = get_marker_at_cell(cell)
-		if placed_marker != null:
+		if placed_marker:
+			# FOUND an existing marker, so treat it as your objective
+			print("\t↳ existing marker: ", placed_marker.name, " at ", placed_marker.position)
 			all_objectives.append(placed_marker)
 			match placed_marker.objective_color:
 				Globals.ColorNames.COLOR_01:
@@ -44,21 +54,25 @@ func _spawn_tile_markers() -> void:
 					objectives_color_03.append(placed_marker)
 				Globals.ColorNames.COLOR_04:
 					objectives_color_04.append(placed_marker)
-			placed_marker.objective_triggered_on.connect(_on_marker_triggered)  # Skip if marker is already there
+			placed_marker.objective_triggered_on.connect(_on_marker_triggered)
 			placed_marker.objective_triggered_off.connect(_on_marker_triggered_out)
 			placed_marker.map = self
-		# 1) Instance the marker
-		var marker: TileMarker = TILEMARKER.instantiate() as TileMarker
+			placed_marker.gameroot = get_parent()
+		else:
+			# NO marker found, so _now_ instantiate one
+			print("\t↳ no existing marker, spawning NEW one")
+			var marker: TileMarker = TILEMARKER.instantiate() as TileMarker
+			# position in center of cell:
+			var local_pos: Vector2 = tilemap.map_to_local(cell)
+			marker.position.x = local_pos.x - tile_size.x/2
+			marker.position.y = local_pos.y + tile_size.y/2
+			add_child(marker)
+			tile_markers.append(marker)
+			print("\t↳ spawned NEW marker: ", marker.name, " at ", marker.position)
+	# end for
 
-		# 2) Compute the world‐space center of that cell
-		var local_pos: Vector2  = tilemap.map_to_local(cell)
-		marker.position.y        = local_pos.y + tile_size.y/2
-		marker.position.x        = local_pos.x - tile_size.x/2
-
-		# 3) Parent under this Map and track it
-		add_child(marker)
-		tile_markers.append(marker)
-		
+	print("Map: done spawning — total tile_markers:", tile_markers.size(),
+		  "  total objectives:", all_objectives.size())
 func get_marker_at_cell(cell: Vector2i) -> TileMarker:
 	var local_pos: Vector2 = tilemap.map_to_local(cell)
 	var marker_center := Vector2(

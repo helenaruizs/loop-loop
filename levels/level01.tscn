@@ -1,13 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://c2t7i2ohmbnpi"]
+[gd_scene load_steps=10 format=3 uid="uid://b41kr1rwcsuiq"]
 
-[ext_resource type="Script" uid="uid://hbrtjssy20ph" path="res://levels/main.gd" id="1_py2r8"]
-[ext_resource type="PackedScene" uid="uid://ij1x6ui1s3wd" path="res://maps/map01.tscn" id="2_py2r8"]
-[ext_resource type="AudioStream" uid="uid://13abppssai4s" path="res://assets/sound/fx/quarter01.wav" id="3_6q0d3"]
-[ext_resource type="PackedScene" uid="uid://cbgw6o8yk3bom" path="res://characters/spawn_point.tscn" id="3_ed0h8"]
-[ext_resource type="AudioStream" uid="uid://dvyxiid0u6unq" path="res://assets/sound/fx/beat01.wav" id="4_7i3qh"]
-[ext_resource type="PackedScene" uid="uid://bt8gfiukro0ny" path="res://ui/ui.tscn" id="4_x5epe"]
-[ext_resource type="PackedScene" uid="uid://cnoyo2u57e6xo" path="res://scenes/camera.tscn" id="7_xq8ic"]
-[ext_resource type="PackedScene" uid="uid://cs2udj55y4t2q" path="res://scenes/audio.tscn" id="8_ed0h8"]
+[ext_resource type="Script" uid="uid://hbrtjssy20ph" path="res://levels/main.gd" id="1_j4tj3"]
+[ext_resource type="PackedScene" uid="uid://b787amytwavu5" path="res://maps/map01.tscn" id="2_py2r8"]
+[ext_resource type="PackedScene" uid="uid://cbgw6o8yk3bom" path="res://characters/spawn_point.tscn" id="3_qhdme"]
+[ext_resource type="AudioStream" uid="uid://13abppssai4s" path="res://assets/sound/fx/quarter01.wav" id="4_yb4d8"]
+[ext_resource type="AudioStream" uid="uid://dvyxiid0u6unq" path="res://assets/sound/fx/beat01.wav" id="5_8ywy7"]
+[ext_resource type="PackedScene" uid="uid://bt8gfiukro0ny" path="res://ui/ui.tscn" id="6_jkv7y"]
+[ext_resource type="PackedScene" uid="uid://cnoyo2u57e6xo" path="res://scenes/camera.tscn" id="7_casbk"]
+[ext_resource type="PackedScene" uid="uid://cs2udj55y4t2q" path="res://scenes/audio.tscn" id="8_jlnk0"]
 
 [sub_resource type="Environment" id="Environment_tefeu"]
 background_mode = 3
@@ -25,35 +25,34 @@ adjustment_contrast = 0.9
 adjustment_saturation = 1.46
 
 [node name="Main" type="Node"]
-script = ExtResource("1_py2r8")
+script = ExtResource("1_j4tj3")
 
 [node name="Map" parent="." instance=ExtResource("2_py2r8")]
 
 [node name="Characters" type="Node2D" parent="."]
 
-[node name="Spawn1" parent="Characters" instance=ExtResource("3_ed0h8")]
-position = Vector2(201, 392)
+[node name="Spawn1" parent="Characters" instance=ExtResource("3_qhdme")]
+position = Vector2(358, 254)
 
-[node name="Spawn2" parent="Characters" instance=ExtResource("3_ed0h8")]
-position = Vector2(1709, 435)
+[node name="Spawn2" parent="Characters" instance=ExtResource("3_qhdme")]
+position = Vector2(1532, 251)
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.5
 
-[node name="UI" parent="." instance=ExtResource("4_x5epe")]
-
 [node name="FX_Click" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_6q0d3")
-volume_db = -4.0
+stream = ExtResource("4_yb4d8")
 bus = &"SimpleFX"
 
 [node name="FX_Click2" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_7i3qh")
-volume_db = -4.0
+stream = ExtResource("5_8ywy7")
 bus = &"FX"
 
-[node name="Camera2D" parent="." instance=ExtResource("7_xq8ic")]
-position = Vector2(956, 547)
+[node name="UI" parent="." instance=ExtResource("6_jkv7y")]
+
+[node name="Camera2D" parent="." instance=ExtResource("7_casbk")]
+position = Vector2(961, 542)
+zoom = Vector2(0.96, 0.96)
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
 position = Vector2(964, -164)
@@ -65,6 +64,6 @@ max_distance = 3450.0
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_tefeu")
 
-[node name="Audio" parent="." instance=ExtResource("8_ed0h8")]
+[node name="Audio" parent="." instance=ExtResource("8_jlnk0")]
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

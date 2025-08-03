@@ -174,6 +174,43 @@ func char_physics_process(delta: float) -> void:
 	
 	move_and_slide()
 	
+	var rays: Array = [ray_up, ray_right, ray_down, ray_left]
+	for ray: RayCast2D in rays:
+	# 1) force the raycast to refresh right now
+		ray.force_raycast_update()
+
+	# 2) now grab the updated collision info
+		var is_hit: bool = ray.is_colliding()
+		var prev_marker: Area2D = last_hits[ray] as Area2D
+		var current_marker: Area2D = null
+		if is_hit:
+			current_marker = ray.get_collider() as Area2D
+
+	# -- EXIT logic --
+		if prev_marker != null and prev_marker != current_marker:
+		# double‐check you really aren’t hitting it anymore
+			ray.force_raycast_update()
+			if not ray.is_colliding() or (ray.get_collider() as Area2D) != prev_marker:
+				var parent := prev_marker.get_parent()
+				var cnt :int = marker_active_rays.get(prev_marker, 1) - 1
+				if cnt <= 0:
+					parent.on_marker_exit(self)
+					marker_active_rays.erase(prev_marker)
+				else:
+					marker_active_rays[prev_marker] = cnt
+				last_hits[ray] = null
+
+	# -- ENTER logic --
+		if current_marker != null and prev_marker != current_marker:
+			ray.force_raycast_update()  # (optional) freshen once more
+			var parent := current_marker.get_parent()
+			var cnt : int= marker_active_rays.get(current_marker, 0) + 1
+			marker_active_rays[current_marker] = cnt
+			if cnt == 1:
+				parent.on_marker_enter(self)
+			last_hits[ray] = current_marker
+			
+	map.check_win_condition()
 	
 		# Normalized screen position
 	var viewport_size := get_viewport().get_visible_rect().size
@@ -220,3 +257,20 @@ func darken(value: float) -> void:
 
 func on_level_completed() -> void:
 	set_shader_colors(Color.WHITE, Color.WHITE)
+
+func check_ray_colliding(marker: TileMarker) -> bool:
+	print("CHECKING")
+	var rays: Array[RayCast2D] = [ray_up, ray_right, ray_down, ray_left]
+	for ray in rays:
+		# 1) Force the raycast to refresh right now
+		ray.force_raycast_update()
+		# 2) If this ray isn’t hitting anything, it fails
+		if not ray.is_colliding():
+			return false
+		# 3) Otherwise grab the hit Area2D’s parent and compare
+		var hit_area := ray.get_collider() as Area2D
+		var hit_marker := hit_area.get_parent() as TileMarker
+		if hit_marker != marker:
+			return false
+	# all rays are colliding _and_ all of them hit the same marker
+	return true

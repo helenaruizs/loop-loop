@@ -46,6 +46,7 @@ func _ready() -> void:
 	characters_number = spawn_points.size()
 	timer.start()
 	timer.wait_time = tempo
+	map.gameroot = self
 	animation_player.speed_scale = animation_player.speed_scale / tempo
 	#if characters.size() == 0:
 		#push_error("Characters array is empty")

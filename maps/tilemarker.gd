@@ -19,7 +19,7 @@ signal objective_triggered_off(marker: TileMarker, color_name: Globals.ColorName
 @export var objective_color : Globals.ColorNames
 var color: Color
 var char_color: Color
-
+var gameroot: Node
 var map: Map
 
 var completed: bool
@@ -29,8 +29,8 @@ var prev_occupant: Character = null
 var _exit_timer: Timer = null
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	color= Globals.hl_colors[objective_color]
-	char_color= Globals.colors[objective_color]
+	
+	color = Globals.hl_colors[objective_color]
 	set_objective(color)
 	if is_objective:
 		add_to_group("objectives")
@@ -42,58 +42,55 @@ func _ready() -> void:
 	blink.visible = false
 	darken(0.0)
 	Globals.level_completed.connect(on_level_completed)
-	_exit_timer = Timer.new()
-	_exit_timer.one_shot = true
-	add_child(_exit_timer)
-	_exit_timer.timeout.connect(_on_exit_timer_timeout)
 
 func _physics_process(delta: float) -> void:
+	#if completed:
+		#blink.visible = true
+	#else:
+		#blink.visible = false
+	
 	if is_objective:
+		map.check_win_condition()
 		if overlay.visible:
 			if overlay.material.get_shader_parameter("blink_color") == color:
-				print("getting here now")
 				completed = true
 				map.check_win_condition()
 				#map.add_marker_to_list(self, objective_color)
-			
-			if overlay.visible == false or overlay.material.get_shader_parameter("blink_color") != color:
+			#
+			if overlay.material.get_shader_parameter("blink_color") != color:
 				completed = false
-				#map.remove_marker_from_list(self, objective_color)
-			#map.remove_marker_from_list(self, objective_color)
+				##map.remove_marker_from_list(self, objective_color)
+			##map.remove_marker_from_list(self, objective_color)
+		
+		if overlay.visible == false:
+			completed = false
+#
+		#else:
+			#if gameroot.current_char:
+				#if gameroot.current_char.check_ray_colliding(self):
+					#print("IM HEREEEE 22222")
+					#return
+			#completed = false
 	
 func on_marker_enter(character: Character) -> void:
-	# if we're currently waiting to exit, cancel that
-	if _exit_timer.is_stopped() == false:
-		_exit_timer.stop()
-
 	# if it's the same occupant, nothing to do
 	if occupant == character:
 		return
-
 	# if someone else was in here, clear them immediately
 	if occupant != null:
 		_do_marker_exit(occupant)
-
-	# now set the new occupant
 	occupant = character
 	_do_marker_enter(occupant)
 
 
+
+
 func on_marker_exit(character: Character) -> void:
-	# only start the debounce if it's _our_ occupant trying to leave
+	# only fire exit for our occupant
 	if occupant != character:
 		return
-
-	# start the timer; if we get a new on_marker_enter() before it fires,
-	# it'll be stopped above
-	_exit_timer.start(EXIT_DEBOUNCE)
-
-
-func _on_exit_timer_timeout() -> void:
-	# this only fires if no ray re-entered for EXIT_DEBOUNCE seconds
-	if occupant != null:
-		_do_marker_exit(occupant)
-		occupant = null
+	_do_marker_exit(occupant)
+	occupant = null
 
 
 func _do_marker_enter(character: Character) -> void:
