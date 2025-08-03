@@ -1,6 +1,8 @@
 class_name Character
 
 extends CharacterBody2D
+# how many frames of continuous collision/un-collision we require
+const RAY_BUFFER_FRAMES : int = 3
 
 var music_bus_index := AudioServer.get_bus_index("Music") # Or whatever name you used
 var filter_effect_phaser := AudioServer.get_bus_effect(music_bus_index, 1) as AudioEffectLowPassFilter
@@ -11,7 +13,7 @@ var filter_effect_lowpass := AudioServer.get_bus_effect(music_bus_index, 0) as A
 const NORMAL_SCALE: Vector2 = Vector2(1, 1)
 const JUMP_STRETCH: Vector2 = Vector2(0.89, 1.2)  # Tall and thin
 const LAND_SQUASH: Vector2 = Vector2(1.4, 0.78)   # Short and wide
-const TWEEN_TIME: float = 0.2
+const TWEEN_TIME: float = 0.05
 
 const WALK_SQUASH: Vector2 = Vector2(1.24, 0.78)   # Short and wide
 const WALK_STRETCH: Vector2 = Vector2(0.95, 1.1)  # Tall and thin
@@ -21,7 +23,6 @@ var music: AudioStreamPlayer
 @onready var ray_up: RayCast2D = $RayUp
 @onready var ray_right: RayCast2D = $RayRight
 @onready var ray_left: RayCast2D = $RayLeft
-
 @onready var feet: Area2D = $Feet
 @onready var sprite_fx: Sprite2D = $SpriteFX
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -33,6 +34,8 @@ var music: AudioStreamPlayer
 @export var coyote_time: float = 0.18            # seconds grace after leaving ground
 @export var jump_buffer_duration: float = 0.14   
 @export var jump_power := -1100.0
+# for each ray: how many consecutive frames it’s been colliding
+var ray_collision_counts : Dictionary = {}
 
 var color_name: Globals.ColorNames
 var hl_color: Color
@@ -49,6 +52,8 @@ var is_current := false
 
 var is_jumping := false
 
+var map : Map
+
 var marker_active_rays: Dictionary = {} # marker : count of rays touching
 
 func _ready() -> void:
@@ -61,65 +66,43 @@ func _ready() -> void:
 	last_hits[ray_left]  = null
 	Globals.level_completed.connect(on_level_completed)
 
+
 func _physics_process(delta: float) -> void:
-	
-	
 	var rays: Array = [ray_up, ray_right, ray_down, ray_left]
 	for ray: RayCast2D in rays:
+	# 1) force the raycast to refresh right now
+		ray.force_raycast_update()
+
+	# 2) now grab the updated collision info
+		var is_hit: bool = ray.is_colliding()
 		var prev_marker: Area2D = last_hits[ray] as Area2D
 		var current_marker: Area2D = null
-		if ray.is_colliding():
-			print("RAY", ray.name, "colliding with", ray.get_collider(), "at", ray.global_position)
+		if is_hit:
 			current_marker = ray.get_collider() as Area2D
 
-		# EXIT logic (ray left a marker)
+	# -- EXIT logic --
 		if prev_marker != null and prev_marker != current_marker:
-			var parent: = prev_marker.get_parent()
-			marker_active_rays[prev_marker] = marker_active_rays.get(prev_marker, 1) - 1
-			if marker_active_rays[prev_marker] <= 0:
-				# Only fire off event if *no* rays are left touching this marker!
-				parent.on_marker_exit()
-				marker_active_rays.erase(prev_marker)
-			last_hits[ray] = null
+		# double‐check you really aren’t hitting it anymore
+			ray.force_raycast_update()
+			if not ray.is_colliding() or (ray.get_collider() as Area2D) != prev_marker:
+				var parent := prev_marker.get_parent()
+				var cnt :int = marker_active_rays.get(prev_marker, 1) - 1
+				if cnt <= 0:
+					parent.on_marker_exit(self)
+					marker_active_rays.erase(prev_marker)
+				else:
+					marker_active_rays[prev_marker] = cnt
+				last_hits[ray] = null
 
-		# ENTER logic (ray entered a new marker)
+	# -- ENTER logic --
 		if current_marker != null and prev_marker != current_marker:
-			var parent: = current_marker.get_parent()
-			marker_active_rays[current_marker] = marker_active_rays.get(current_marker, 0) + 1
-			if marker_active_rays[current_marker] == 1:
-				# Only fire if *first* ray is touching this marker!
+			ray.force_raycast_update()  # (optional) freshen once more
+			var parent := current_marker.get_parent()
+			var cnt : int= marker_active_rays.get(current_marker, 0) + 1
+			marker_active_rays[current_marker] = cnt
+			if cnt == 1:
 				parent.on_marker_enter(self)
 			last_hits[ray] = current_marker
-#
-#func _physics_process(delta: float) -> void:
-	#var rays: Array = [ray_up, ray_right, ray_down, ray_left]
-	#for ray: RayCast2D in rays:
-		#var prev_marker: Area2D = last_hits[ray] as Area2D
-		#var current_marker: Area2D = null
-		#if ray.is_colliding():
-			#current_marker = ray.get_collider() as Area2D
-#
-		## EXIT logic (ray left a marker)
-		#if prev_marker != null and prev_marker != current_marker:
-			#var parent: = prev_marker.get_parent()
-			#marker_active_rays[prev_marker] = marker_active_rays.get(prev_marker, 1) - 1
-			#print("Ray exit", prev_marker, "count:", marker_active_rays[prev_marker])
-			#if marker_active_rays[prev_marker] <= 0:
-				## Only fire off event if *no* rays are left touching this marker!
-				#parent.on_marker_exit()
-				#marker_active_rays.erase(prev_marker)
-			#last_hits[ray] = null
-#
-		## ENTER logic (ray entered a new marker)
-		#if current_marker != null and prev_marker != current_marker:
-			#var parent: = current_marker.get_parent()
-			#marker_active_rays[current_marker] = marker_active_rays.get(current_marker, 0) + 1
-			#print("Ray enter", current_marker, "count:", marker_active_rays[current_marker])
-			#if marker_active_rays[current_marker] == 1:
-				## Only fire if *first* ray is touching this marker!
-				#parent.on_marker_enter(self)
-			#last_hits[ray] = current_marker
-
 	
 
 func _tween_scale(target: Vector2) -> void:
@@ -131,8 +114,6 @@ func _tween_scale(target: Vector2) -> void:
 	
 func char_physics_process(delta: float) -> void:
 	
-	for ray: RayCast2D in [ray_up, ray_right, ray_down, ray_left]:
-		ray.force_raycast_update()
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -192,6 +173,7 @@ func char_physics_process(delta: float) -> void:
 	sprite.skew = lerp(sprite.skew, target_skew, 0.17)
 	
 	move_and_slide()
+	
 	
 		# Normalized screen position
 	var viewport_size := get_viewport().get_visible_rect().size
