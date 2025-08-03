@@ -56,11 +56,13 @@ func _ready() -> void:
 	change_light(current_color)
 
 func _physics_process(delta: float) -> void:
+	map.check_win_condition()
 	if current_char:
 		current_char.char_physics_process(delta)
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	map.check_win_condition()
 	if event.is_action_pressed("restart_level"):
 		_restart_level()
 
@@ -73,6 +75,7 @@ func _restart_level() -> void:
 	# get_tree().change_scene_to(current_scene)
 	
 func _on_timer_timeout() -> void:
+	map.check_win_condition()
 	current_time += 1
 	if current_time != max_time:
 		play_with_random_pitch(fx_click)
@@ -104,6 +107,7 @@ func init_character(char: Character, index: int) -> void:
 	char.set_shader_colors(char.character_color, char.hl_color)
 	char.set_tempo(tempo)
 	char.music = music
+	char.map = map
 	
 func new_turn() -> void:
 	turn += 1
