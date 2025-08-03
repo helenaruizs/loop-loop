@@ -1,0 +1,70 @@
+[gd_scene load_steps=10 format=3 uid="uid://d4kxewvxkwt0"]
+
+[ext_resource type="Script" uid="uid://hbrtjssy20ph" path="res://levels/main.gd" id="1_8ye52"]
+[ext_resource type="PackedScene" uid="uid://c6hgf8s4j2f6c" path="res://maps/map04.tscn" id="2_8ye52"]
+[ext_resource type="PackedScene" uid="uid://cbgw6o8yk3bom" path="res://characters/spawn_point.tscn" id="3_qkyi5"]
+[ext_resource type="AudioStream" uid="uid://13abppssai4s" path="res://assets/sound/fx/quarter01.wav" id="4_jdr1m"]
+[ext_resource type="AudioStream" uid="uid://dvyxiid0u6unq" path="res://assets/sound/fx/beat01.wav" id="5_858d1"]
+[ext_resource type="PackedScene" uid="uid://bt8gfiukro0ny" path="res://ui/ui.tscn" id="6_rp6xw"]
+[ext_resource type="PackedScene" uid="uid://cnoyo2u57e6xo" path="res://scenes/camera.tscn" id="7_ho4s2"]
+[ext_resource type="PackedScene" uid="uid://cs2udj55y4t2q" path="res://scenes/audio.tscn" id="8_1gfio"]
+
+[sub_resource type="Environment" id="Environment_tefeu"]
+background_mode = 3
+background_energy_multiplier = 6.48
+tonemap_mode = 1
+tonemap_white = 1.28
+glow_enabled = true
+glow_intensity = 1.65
+glow_bloom = 0.03
+glow_hdr_threshold = 0.33
+glow_hdr_scale = 3.03
+glow_hdr_luminance_cap = 0.83
+adjustment_enabled = true
+adjustment_contrast = 0.9
+adjustment_saturation = 1.46
+
+[node name="Main" type="Node"]
+script = ExtResource("1_8ye52")
+
+[node name="Map" parent="." instance=ExtResource("2_8ye52")]
+position = Vector2(-139, -93)
+
+[node name="Characters" type="Node2D" parent="."]
+
+[node name="Spawn1" parent="Characters" instance=ExtResource("3_qkyi5")]
+position = Vector2(235, 744)
+
+[node name="Spawn2" parent="Characters" instance=ExtResource("3_qkyi5")]
+position = Vector2(465, 746)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="FX_Click" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_jdr1m")
+bus = &"SimpleFX"
+
+[node name="FX_Click2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_858d1")
+bus = &"FX"
+
+[node name="UI" parent="." instance=ExtResource("6_rp6xw")]
+
+[node name="Camera2D" parent="." instance=ExtResource("7_ho4s2")]
+position = Vector2(1013, 547)
+zoom = Vector2(0.82, 0.82)
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+position = Vector2(964, -164)
+color = Color(1, 0.5568628, 0.9843137, 1)
+energy = 1.55
+blend_mode = 2
+max_distance = 3450.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_tefeu")
+
+[node name="Audio" parent="." instance=ExtResource("8_1gfio")]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

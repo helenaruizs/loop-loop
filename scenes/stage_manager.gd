@@ -2,6 +2,7 @@ extends Node
 
 var level_index: int = 0
 
+
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
 
 @export var levels_array: Array[PackedScene]
@@ -20,9 +21,16 @@ func _ready() -> void:
 	if Globals.has_signal("restart_level"):
 		Globals.restart_level.connect(restart_level)
 	Globals.level_completed.connect(level_complete)
+	
 	# Add more connections as needed
 
 	show_title_screen(scenes[0])
+
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("pause"):
+		get_tree().paused = not get_tree().paused
+		Globals.pause.emit(get_tree().paused)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("DEBUG_LEVEL_COMPLETE"):

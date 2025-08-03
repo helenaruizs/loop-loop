@@ -3,6 +3,7 @@ extends Node
 
 signal start_game
 signal level_completed(index: int)
+signal pause(is_paused: bool)
 
 enum ColorNames {
 	COLOR_01,

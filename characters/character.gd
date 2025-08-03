@@ -38,7 +38,9 @@ var music: AudioStreamPlayer
 var ray_collision_counts : Dictionary = {}
 
 var extra_coyote: bool = false
-var extra_coyote_duration: float = 0.25   # how long the “fake floor” lasts
+var extra_coyote_duration: float = 0.25
+var extra_jump_power: float = -300  # how long the “fake floor” lasts
+var reset_jump_power: float = jump_power
 
 var color_name: Globals.ColorNames
 var hl_color: Color
@@ -125,10 +127,12 @@ func char_physics_process(delta: float) -> void:
 	
 # — COYOTE TIME —
 	if is_on_floor():
+		jump_power = reset_jump_power
 		coyote_timer = coyote_time
 	elif extra_coyote:
 # first frame off‐ground after a turn start, give them extra time
 		coyote_timer = extra_coyote_duration
+		jump_power += extra_jump_power
 		extra_coyote = false
 	else:
 		coyote_timer = max(coyote_timer - delta, 0.0)
@@ -144,6 +148,7 @@ func char_physics_process(delta: float) -> void:
 		velocity.y = jump_power
 		jump_buffer = 0.0
 		coyote_timer = 0.0
+		jump_power = reset_jump_power
 
 # — VARIABLE JUMP HEIGHT (SNAPPY CUT) —
 	if velocity.y < 0.0 and Input.is_action_just_released("jump"):
