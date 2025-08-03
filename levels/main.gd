@@ -9,17 +9,19 @@ extends Node
 @onready var fx_click: AudioStreamPlayer = $FX_Click
 @onready var fx_click_2: AudioStreamPlayer = $FX_Click2
 @onready var camera: Camera2D = $Camera2D
-@onready var music: AudioStreamPlayer = $Music
+var music: AudioStreamPlayer
 
 var characters: Array[Character]
 var characters_number: int
 @export var tempo: float = 0.5
 
 @onready var spawn_points := []
+@onready var audio: Node = $Audio
 
 @onready var ui: UI = $UI
 @onready var map: Map = $Map
 
+var audio_tracks: Array[AudioStreamPlayer]
 
 var current_char: Character = null
 var current_color: Color
@@ -33,7 +35,11 @@ var current_time := 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	audio_tracks = audio.get_audio()
+	music = audio_tracks[4]
 	music.stop()
+	for track: AudioStreamPlayer in audio_tracks:
+		track.stop()
 	for child in characters_root.get_children():
 		if child is Node2D:
 			spawn_points.append(child)
@@ -116,6 +122,7 @@ func new_turn() -> void:
 	
 	if turn == 1:
 		music.play()
+		#audio_tracks[0].play()
 	
 	if turn <= characters_number:
 		# Clean up previous char if any
@@ -129,7 +136,7 @@ func new_turn() -> void:
 		var char: Character = spawn_character(turn - 1)
 		current_char = char
 		current_index = turn - 1
-
+		
 		char.animation_player.play("blink")
 		await char.animation_player.animation_finished
 		char.animation_player.play("idle_bob")
@@ -137,6 +144,8 @@ func new_turn() -> void:
 		current_color = Globals.bg_colors[current_index]
 		char.tween_shader(0.0, 1.0)
 		change_light(current_color)
+		
+		#audio_tracks[1].play()
 		return  # Do not run cycling logic below!
 
 	# From here on, just cycle
@@ -146,6 +155,8 @@ func new_turn() -> void:
 		current_char.animation_player.play("frozen")
 		current_char.darken(0.4)
 
+	
+	#audio_tracks[2].play()
 	current_index = (current_index + 1) % characters.size()
 	current_char = characters[current_index]
 	current_char.animation_player.play("blink")

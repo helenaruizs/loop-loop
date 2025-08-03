@@ -7,7 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://dvyxiid0u6unq" path="res://assets/sound/fx/beat01.wav" id="4_6yxbg"]
 [ext_resource type="PackedScene" uid="uid://bt8gfiukro0ny" path="res://ui/ui.tscn" id="6_qy63d"]
 [ext_resource type="PackedScene" uid="uid://cnoyo2u57e6xo" path="res://scenes/camera.tscn" id="7_6et1j"]
-[ext_resource type="AudioStream" uid="uid://c8mdu3gwfqy0" path="res://assets/sound/music/music_01.tres" id="13_1fput"]
+[ext_resource type="PackedScene" uid="uid://cs2udj55y4t2q" path="res://scenes/audio.tscn" id="8_6et1j"]
 
 [sub_resource type="Environment" id="Environment_tefeu"]
 background_mode = 3
@@ -63,11 +63,6 @@ max_distance = 3450.0
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_tefeu")
 
-[node name="Music" type="AudioStreamPlayer" parent="."]
-process_mode = 3
-stream = ExtResource("13_1fput")
-volume_db = -19.115
-bus = &"Music"
-parameters/looping = true
+[node name="Audio" parent="." instance=ExtResource("8_6et1j")]
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

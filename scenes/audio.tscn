@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://cs2udj55y4t2q"]
+
+[ext_resource type="AudioStream" uid="uid://g7taowao6c8g" path="res://assets/sound/tracks/bass01.wav" id="1_hlm5c"]
+[ext_resource type="Script" uid="uid://der3iy58454cg" path="res://scenes/audio.gd" id="1_wdljl"]
+[ext_resource type="AudioStream" uid="uid://ci3v5ha0xqc7q" path="res://assets/sound/tracks/harp01.wav" id="2_wdljl"]
+[ext_resource type="AudioStream" uid="uid://brpg7didwqbh1" path="res://assets/sound/tracks/hats01.wav" id="3_dl6it"]
+[ext_resource type="AudioStream" uid="uid://cpwpjca52k6n8" path="res://assets/sound/music/beatbox_loop-1.mp3" id="4_8kkbo"]
+
+[node name="Audio" type="Node"]
+script = ExtResource("1_wdljl")
+
+[node name="Track1" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("1_hlm5c")
+bus = &"Music"
+
+[node name="Track2" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("2_wdljl")
+bus = &"Music"
+
+[node name="Track3" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("3_dl6it")
+bus = &"Music"
+
+[node name="Track4" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("1_hlm5c")
+bus = &"Music"
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("4_8kkbo")
+volume_db = -19.115
+bus = &"Music"
+parameters/looping = true
