@@ -21,7 +21,7 @@ func _ready() -> void:
 	if Globals.has_signal("restart_level"):
 		Globals.restart_level.connect(restart_level)
 	Globals.level_completed.connect(level_complete)
-	
+	Globals.quit_game.connect(on_quit_game)
 	# Add more connections as needed
 
 	show_title_screen(scenes[0])
@@ -33,7 +33,7 @@ func _input(event: InputEvent) -> void:
 		Globals.pause.emit(get_tree().paused)
 	if event.is_action_pressed("restart_level"):
 		restart_level()
-
+	
 #func _unhandled_input(event: InputEvent) -> void:
 	#if Input.is_action_just_pressed("DEBUG_LEVEL_COMPLETE"):
 		#Globals.level_completed.emit()
@@ -71,6 +71,7 @@ func show_thank_you_screen(scene: PackedScene) -> void:
 	change_scene(scene)
 
 func restart_level() -> void:
+	get_tree().paused = not get_tree().paused
 	load_level(level_index)
 
 func change_scene(scene: PackedScene) -> void:
@@ -80,6 +81,8 @@ func change_scene(scene: PackedScene) -> void:
 	else:
 		print("StageManager: Scene changed to:", scene)
 
+func on_quit_game() -> void:
+	get_tree().quit()
 
 func do_freeze_and_zoom_effect() -> void:
 	# 1. Take screenshot

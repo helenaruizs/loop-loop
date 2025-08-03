@@ -1,4 +1,4 @@
-[gd_resource type="AudioBusLayout" load_steps=11 format=3 uid="uid://cskl5pvhdyj5b"]
+[gd_resource type="AudioBusLayout" load_steps=14 format=3 uid="uid://cskl5pvhdyj5b"]
 
 [sub_resource type="AudioEffectPhaser" id="AudioEffectPhaser_j3pel"]
 resource_name = "Phaser"
@@ -49,6 +49,20 @@ range_max_hz = 875.534
 feedback = 0.4
 depth = 3.6
 
+[sub_resource type="AudioEffectHighPassFilter" id="AudioEffectHighPassFilter_j3pel"]
+resource_name = "HighPassFilter"
+cutoff_hz = 4895.0
+resonance = 0.85
+
+[sub_resource type="AudioEffectPhaser" id="AudioEffectPhaser_cenje"]
+resource_name = "Phaser"
+range_min_hz = 439.01
+range_max_hz = 1218.702
+depth = 0.6
+
+[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_5t1r3"]
+resource_name = "LowPassFilter"
+
 [resource]
 bus/1/name = &"FX"
 bus/1/solo = false
@@ -94,3 +108,15 @@ bus/4/effect/0/effect = SubResource("AudioEffectReverb_n8wo2")
 bus/4/effect/0/enabled = true
 bus/4/effect/1/effect = SubResource("AudioEffectPhaser_5t1r3")
 bus/4/effect/1/enabled = true
+bus/5/name = &"Intro"
+bus/5/solo = false
+bus/5/mute = false
+bus/5/bypass_fx = false
+bus/5/volume_db = 0.0
+bus/5/send = &"Master"
+bus/5/effect/0/effect = SubResource("AudioEffectHighPassFilter_j3pel")
+bus/5/effect/0/enabled = true
+bus/5/effect/1/effect = SubResource("AudioEffectPhaser_cenje")
+bus/5/effect/1/enabled = true
+bus/5/effect/2/effect = SubResource("AudioEffectLowPassFilter_5t1r3")
+bus/5/effect/2/enabled = false
