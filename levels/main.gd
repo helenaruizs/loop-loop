@@ -129,7 +129,7 @@ func new_turn() -> void:
 		# Clean up previous char if any
 		if current_char:
 			current_char.tween_shader(1.0, 0.0)
-			current_char.animation_player.play("blink")
+			#current_char.animation_player.play("blink")
 			current_char.animation_player.play("frozen")
 			current_char.darken(0.4)
 
@@ -142,6 +142,7 @@ func new_turn() -> void:
 		await char.animation_player.animation_finished
 		char.animation_player.play("idle_bob")
 		char.darken(0.0)
+		current_char.extra_coyote = true
 		current_color = Globals.bg_colors[current_index]
 		char.tween_shader(0.0, 1.0)
 		change_light(current_color)
@@ -152,7 +153,7 @@ func new_turn() -> void:
 	# From here on, just cycle
 	if current_char:
 		current_char.tween_shader(1.0, 0.0)
-		current_char.animation_player.play("blink")
+		#current_char.animation_player.play("blink")
 		current_char.animation_player.play("frozen")
 		current_char.darken(0.4)
 
@@ -164,6 +165,7 @@ func new_turn() -> void:
 	await current_char.animation_player.animation_finished
 	current_char.animation_player.play("idle_bob")
 	current_char.darken(0.0)
+	current_char.extra_coyote = true
 	current_color = Globals.bg_colors[current_index]
 	current_char.tween_shader(0.0, 1.0)
 	change_light(current_color)

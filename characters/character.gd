@@ -12,7 +12,7 @@ var filter_effect_lowpass := AudioServer.get_bus_effect(music_bus_index, 0) as A
 # Tweak these values for your look:
 const NORMAL_SCALE: Vector2 = Vector2(1, 1)
 const JUMP_STRETCH: Vector2 = Vector2(0.89, 1.2)  # Tall and thin
-const LAND_SQUASH: Vector2 = Vector2(1.4, 0.78)   # Short and wide
+const LAND_SQUASH: Vector2 = Vector2(1.2, 0.86)   # Short and wide
 const TWEEN_TIME: float = 0.05
 
 const WALK_SQUASH: Vector2 = Vector2(1.24, 0.78)   # Short and wide
@@ -36,6 +36,9 @@ var music: AudioStreamPlayer
 @export var jump_power := -1100.0
 # for each ray: how many consecutive frames it’s been colliding
 var ray_collision_counts : Dictionary = {}
+
+var extra_coyote: bool = false
+var extra_coyote_duration: float = 0.25   # how long the “fake floor” lasts
 
 var color_name: Globals.ColorNames
 var hl_color: Color
@@ -120,12 +123,15 @@ func char_physics_process(delta: float) -> void:
 	else:
 		velocity.y = 0.0
 	
-	# — COYOTE TIME —
+# — COYOTE TIME —
 	if is_on_floor():
 		coyote_timer = coyote_time
+	elif extra_coyote:
+# first frame off‐ground after a turn start, give them extra time
+		coyote_timer = extra_coyote_duration
+		extra_coyote = false
 	else:
 		coyote_timer = max(coyote_timer - delta, 0.0)
-	
 
 	# — JUMP BUFFER —
 	if Input.is_action_just_pressed("jump"):
