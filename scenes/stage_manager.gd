@@ -31,11 +31,13 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
 		get_tree().paused = not get_tree().paused
 		Globals.pause.emit(get_tree().paused)
+	if event.is_action_pressed("restart_level"):
+		restart_level()
 
-func _unhandled_input(event: InputEvent) -> void:
-	if Input.is_action_just_pressed("DEBUG_LEVEL_COMPLETE"):
-		Globals.level_completed.emit()
-		level_complete()
+#func _unhandled_input(event: InputEvent) -> void:
+	#if Input.is_action_just_pressed("DEBUG_LEVEL_COMPLETE"):
+		#Globals.level_completed.emit()
+		#level_complete()
 
 func show_title_screen(scene: PackedScene) -> void:
 	change_scene(scene)

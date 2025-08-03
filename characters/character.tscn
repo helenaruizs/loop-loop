@@ -455,27 +455,27 @@ position = Vector2(0, -63)
 shape = SubResource("CapsuleShape2D_qqr4u")
 
 [node name="RayDown" type="RayCast2D" parent="."]
-target_position = Vector2(0, 2000)
+target_position = Vector2(0, 3000)
 collision_mask = 4
 collide_with_areas = true
 collide_with_bodies = false
 
 [node name="RayUp" type="RayCast2D" parent="."]
-target_position = Vector2(0, -2000)
+target_position = Vector2(0, -3000)
 collision_mask = 4
 collide_with_areas = true
 collide_with_bodies = false
 
 [node name="RayRight" type="RayCast2D" parent="."]
 position = Vector2(0, -76)
-target_position = Vector2(2000, 0)
+target_position = Vector2(3000, 0)
 collision_mask = 4
 collide_with_areas = true
 collide_with_bodies = false
 
 [node name="RayLeft" type="RayCast2D" parent="."]
 position = Vector2(0, -76)
-target_position = Vector2(-2000, 0)
+target_position = Vector2(-3000, 0)
 collision_mask = 4
 collide_with_areas = true
 collide_with_bodies = false

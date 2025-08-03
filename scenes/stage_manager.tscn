@@ -1,19 +1,20 @@
-[gd_scene load_steps=10 format=3 uid="uid://cf132fnn2rne0"]
+[gd_scene load_steps=11 format=3 uid="uid://cf132fnn2rne0"]
 
 [ext_resource type="Script" uid="uid://ctyu4qcxyfvyw" path="res://scenes/stage_manager.gd" id="1_r8c87"]
 [ext_resource type="AudioStream" uid="uid://cwu44431bom8e" path="res://assets/sound/fx/scratch.wav" id="2_oeeoj"]
-[ext_resource type="PackedScene" uid="uid://c2t7i2ohmbnpi" path="res://levels/level00.tscn" id="2_q7kqs"]
+[ext_resource type="PackedScene" uid="uid://c2t7i2ohmbnpi" path="res://levels/level02.tscn" id="2_q7kqs"]
 [ext_resource type="PackedScene" uid="uid://qbjtqeh8tp0l" path="res://levels/level03.tscn" id="2_ve2qf"]
-[ext_resource type="PackedScene" uid="uid://b41kr1rwcsuiq" path="res://levels/level01.tscn" id="3_dlrmm"]
+[ext_resource type="PackedScene" uid="uid://b41kr1rwcsuiq" path="res://levels/level00.tscn" id="3_dlrmm"]
 [ext_resource type="PackedScene" uid="uid://bjx7oapnevy5d" path="res://scenes/title.tscn" id="4_5n82i"]
-[ext_resource type="PackedScene" uid="uid://l03kp64jus84" path="res://levels/level02.tscn" id="4_ve2qf"]
+[ext_resource type="PackedScene" uid="uid://l03kp64jus84" path="res://levels/level01.tscn" id="4_ve2qf"]
 [ext_resource type="PackedScene" uid="uid://dxkfnsoaadpn5" path="res://scenes/screen_transition.tscn" id="5_dlrmm"]
 [ext_resource type="PackedScene" uid="uid://d4kxewvxkwt0" path="res://levels/level04.tscn" id="6_kr4cb"]
+[ext_resource type="PackedScene" uid="uid://bv6yqgly4dt80" path="res://levels/level05.tscn" id="7_cfeq2"]
 
 [node name="StageManager" type="Node"]
 process_mode = 3
 script = ExtResource("1_r8c87")
-levels_array = Array[PackedScene]([ExtResource("2_q7kqs"), ExtResource("3_dlrmm"), ExtResource("4_ve2qf"), ExtResource("2_ve2qf"), ExtResource("6_kr4cb")])
+levels_array = Array[PackedScene]([ExtResource("3_dlrmm"), ExtResource("4_ve2qf"), ExtResource("2_q7kqs"), ExtResource("2_ve2qf"), ExtResource("6_kr4cb"), ExtResource("7_cfeq2")])
 scenes = Array[PackedScene]([ExtResource("4_5n82i"), ExtResource("5_dlrmm"), ExtResource("5_dlrmm")])
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

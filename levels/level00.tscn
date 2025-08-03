@@ -1,7 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://c2t7i2ohmbnpi"]
+[gd_scene load_steps=10 format=3 uid="uid://b41kr1rwcsuiq"]
 
 [ext_resource type="Script" uid="uid://hbrtjssy20ph" path="res://levels/main.gd" id="1_36qmk"]
-[ext_resource type="PackedScene" uid="uid://ij1x6ui1s3wd" path="res://maps/map00.tscn" id="2_mll6j"]
+[ext_resource type="PackedScene" uid="uid://b787amytwavu5" path="res://maps/map00.tscn" id="2_36qmk"]
 [ext_resource type="PackedScene" uid="uid://cbgw6o8yk3bom" path="res://characters/spawn_point.tscn" id="3_ocq04"]
 [ext_resource type="PackedScene" uid="uid://bt8gfiukro0ny" path="res://ui/ui.tscn" id="4_b6lsn"]
 [ext_resource type="AudioStream" uid="uid://13abppssai4s" path="res://assets/sound/fx/quarter01.wav" id="5_fh3a0"]
@@ -27,33 +27,32 @@ adjustment_saturation = 1.46
 [node name="Main" type="Node"]
 script = ExtResource("1_36qmk")
 
-[node name="Map" parent="." instance=ExtResource("2_mll6j")]
+[node name="Map" parent="." instance=ExtResource("2_36qmk")]
 
 [node name="Characters" type="Node2D" parent="."]
 
 [node name="Spawn1" parent="Characters" instance=ExtResource("3_ocq04")]
-position = Vector2(201, 392)
+position = Vector2(674, 452)
 
 [node name="Spawn2" parent="Characters" instance=ExtResource("3_ocq04")]
-position = Vector2(1709, 435)
+position = Vector2(401, 436)
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.5
 
-[node name="UI" parent="." instance=ExtResource("4_b6lsn")]
-
 [node name="FX_Click" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_fh3a0")
-volume_db = -4.0
 bus = &"SimpleFX"
 
 [node name="FX_Click2" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_a4b2c")
-volume_db = -4.0
 bus = &"FX"
 
+[node name="UI" parent="." instance=ExtResource("4_b6lsn")]
+
 [node name="Camera2D" parent="." instance=ExtResource("7_jeibo")]
-position = Vector2(956, 547)
+position = Vector2(961, 542)
+zoom = Vector2(0.96, 0.96)
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
 position = Vector2(964, -164)

@@ -68,10 +68,6 @@ func _physics_process(delta: float) -> void:
 		current_char.char_physics_process(delta)
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	map.check_win_condition()
-	if event.is_action_pressed("restart_level"):
-		_restart_level()
 
 func _restart_level() -> void:
 	turn = 0
