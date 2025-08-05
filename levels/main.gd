@@ -138,6 +138,8 @@ func new_turn() -> void:
 		await char.animation_player.animation_finished
 		char.animation_player.play("idle_bob")
 		char.darken(0.0)
+		print(char.is_jumping)
+		print(current_char.velocity.y)
 		current_char.extra_coyote = true
 		current_color = Globals.bg_colors[current_index]
 		char.tween_shader(0.0, 1.0)
@@ -161,6 +163,9 @@ func new_turn() -> void:
 	await current_char.animation_player.animation_finished
 	current_char.animation_player.play("idle_bob")
 	current_char.darken(0.0)
+	print(current_char.is_jumping)
+	
+	print(current_char.velocity.y)
 	current_char.extra_coyote = true
 	current_color = Globals.bg_colors[current_index]
 	current_char.tween_shader(0.0, 1.0)

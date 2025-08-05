@@ -1,22 +1,21 @@
 class_name Character
 
 extends CharacterBody2D
-# how many frames of continuous collision/un-collision we require
 const RAY_BUFFER_FRAMES : int = 3
 
-var music_bus_index := AudioServer.get_bus_index("Music") # Or whatever name you used
+var music_bus_index := AudioServer.get_bus_index("Music")
 var filter_effect_phaser := AudioServer.get_bus_effect(music_bus_index, 1) as AudioEffectLowPassFilter
 var filter_effect_reverb := AudioServer.get_bus_effect(music_bus_index, 2) as AudioEffectLowPassFilter
 var filter_effect_lowpass := AudioServer.get_bus_effect(music_bus_index, 0) as AudioEffectLowPassFilter
 
 # Tweak these values for your look:
 const NORMAL_SCALE: Vector2 = Vector2(1, 1)
-const JUMP_STRETCH: Vector2 = Vector2(0.89, 1.2)  # Tall and thin
-const LAND_SQUASH: Vector2 = Vector2(1.2, 0.86)   # Short and wide
+const JUMP_STRETCH: Vector2 = Vector2(0.89, 1.2)
+const LAND_SQUASH: Vector2 = Vector2(1.2, 0.86)
 const TWEEN_TIME: float = 0.05
 
-const WALK_SQUASH: Vector2 = Vector2(1.24, 0.78)   # Short and wide
-const WALK_STRETCH: Vector2 = Vector2(0.95, 1.1)  # Tall and thin
+const WALK_SQUASH: Vector2 = Vector2(1.24, 0.78)
+const WALK_STRETCH: Vector2 = Vector2(0.95, 1.1)
 
 var music: AudioStreamPlayer
 @onready var ray_down: RayCast2D = $RayDown
@@ -118,7 +117,14 @@ func _tween_scale(target: Vector2) -> void:
 	# tw.tween_property(visual, "scale", target, TWEEN_TIME).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	
 func char_physics_process(delta: float) -> void:
-	
+	if extra_coyote:
+		if is_on_floor():
+			jump_buffer = 0.0
+			extra_coyote = false
+			is_jumping = false
+			velocity.y = 0.0
+			coyote_timer = 0.0
+			jump_power = reset_jump_power
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -133,7 +139,9 @@ func char_physics_process(delta: float) -> void:
 # first frame off‐ground after a turn start, give them extra time
 		coyote_timer = extra_coyote_duration
 		jump_power += extra_jump_power
+		jump_buffer = 0.0
 		extra_coyote = false
+		is_jumping = false
 	else:
 		coyote_timer = max(coyote_timer - delta, 0.0)
 
@@ -182,6 +190,8 @@ func char_physics_process(delta: float) -> void:
 	var max_skew := 0.015 # Radians, tweak as desired
 	var target_skew := max_skew * input_dir
 	sprite.skew = lerp(sprite.skew, target_skew, 0.17)
+	
+	extra_coyote = false
 	
 	move_and_slide()
 	

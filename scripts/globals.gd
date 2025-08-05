@@ -37,7 +37,7 @@ var colors: Array[Color] = []
 var hl_colors: Array[Color] = []
 
 var bg_colors: Array[Color] = []
-# Called when the node enters the scene tree for the first time.
+
 func _ready() -> void:
 	colors = [
 		Globals.color_01,
@@ -62,6 +62,5 @@ func _ready() -> void:
 
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass

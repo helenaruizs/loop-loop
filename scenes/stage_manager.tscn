@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cf132fnn2rne0"]
+[gd_scene load_steps=12 format=3 uid="uid://cf132fnn2rne0"]
 
 [ext_resource type="Script" uid="uid://ctyu4qcxyfvyw" path="res://scenes/stage_manager.gd" id="1_r8c87"]
 [ext_resource type="AudioStream" uid="uid://cwu44431bom8e" path="res://assets/sound/fx/scratch.wav" id="2_oeeoj"]
@@ -10,12 +10,13 @@
 [ext_resource type="PackedScene" uid="uid://dxkfnsoaadpn5" path="res://scenes/screen_transition.tscn" id="5_dlrmm"]
 [ext_resource type="PackedScene" uid="uid://d4kxewvxkwt0" path="res://levels/level04.tscn" id="6_kr4cb"]
 [ext_resource type="PackedScene" uid="uid://bv6yqgly4dt80" path="res://levels/level05.tscn" id="7_cfeq2"]
+[ext_resource type="PackedScene" uid="uid://4abcnq663ykw" path="res://scenes/thank_you.tscn" id="8_cfeq2"]
 
 [node name="StageManager" type="Node"]
 process_mode = 3
 script = ExtResource("1_r8c87")
 levels_array = Array[PackedScene]([ExtResource("3_dlrmm"), ExtResource("4_ve2qf"), ExtResource("2_q7kqs"), ExtResource("2_ve2qf"), ExtResource("6_kr4cb"), ExtResource("7_cfeq2")])
-scenes = Array[PackedScene]([ExtResource("4_5n82i"), ExtResource("5_dlrmm"), ExtResource("5_dlrmm")])
+scenes = Array[PackedScene]([ExtResource("4_5n82i"), ExtResource("5_dlrmm"), ExtResource("8_cfeq2")])
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 process_mode = 3
